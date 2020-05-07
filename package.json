@@ -12,6 +12,10 @@
     "@angular/platform-browser-dynamic": "^9.1.4",
     "@angular/router": "^9.1.4",
     "core-js": "^3.6.5",
+    "mathjs": "^5.5.0",
+    "ng2-charts": "2.3.0",
+    "ng5-slider": "1.2.4",
+    "chart.js": "2.7.2",
     "rxjs": "^6.5.5",
     "tslib": "^1.11.2",
     "zone.js": "^0.10.3"
