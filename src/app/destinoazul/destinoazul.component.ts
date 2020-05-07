@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { QuestionBase } from '../shared/question-base';
+import { QuestionControlService } from '../shared/question-control.service';
 import * as math from "mathjs";
 import { Options } from "ng5-slider";
 import { ChartOptions, ChartType, ChartDataSets } from 'chartjs';
@@ -10,9 +12,12 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-destinoazul',
   templateUrl: './destinoazul.component.html',
-  styleUrls: ['./destinoazul.component.css']
+  styleUrls: ['./destinoazul.component.css'],
+  providers: [QuestionControlService]
 })
 export class DestinoazulComponent implements OnInit {
+    @Input() questions: QuestionBase<string>[] = [];
+
    // inicio grafico
   // // grafico de barras
   public barChartOptions: ChartOptions = {
@@ -26,6 +31,13 @@ export class DestinoazulComponent implements OnInit {
   // // grafico de linhas
   public lineChartData: ChartDataSets[] = [ ];
   // Variaveis gerais
+  form: FormGroup;
+  payLoad = "";
+  um = 0;
+  dois = 0;
+  sl = 0;
+  multiplic = 0;
+  somatoria = 0;
   sliderPercentage: any = 0;
 
   // variaveis Tarfifas
@@ -145,10 +157,13 @@ export class DestinoazulComponent implements OnInit {
   value: any = 0;
   res = [];
 
-  constructor(public router:Router) { }
+  constructor(
+    public router:Router,
+    private qcs: QuestionControlService 
+       ) { }
  
   ngOnInit() {
-  this.form = this.qcs.toFormGroup(this.questions);
+        this.form = this.qcs.toFormGroup(this.questions);
 
     // inicializar valores
     this.totalMes = "30666.18";
