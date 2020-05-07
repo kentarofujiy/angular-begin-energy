@@ -1,0 +1,9 @@
+<p>
+home works!
+</p>
+<button (click)="gotoLogin()">Logout</button>
+<ul>
+  <li *ngFor="let student of students">
+    <a routerLink="/studentdetails/{{student.firstname}}/{{student.lastname}}/{{student.location}}/{{student.intrest}}">{{student.firstname}}</a>
+  </li>
+</ul>
