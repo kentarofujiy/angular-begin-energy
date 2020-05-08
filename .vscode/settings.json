@@ -146,7 +146,7 @@
    * When `wordWrap` = "bounded", the lines will wrap at min(viewport width, wordWrapColumn).
    * Defaults to "off".
    */
-  "editor.wordWrap": "on",
+  "editor.wordWrap": "on"
   /**
    * Control the wrapping of the editor.
    * When `wordWrap` = "off", the lines will never wrap.
