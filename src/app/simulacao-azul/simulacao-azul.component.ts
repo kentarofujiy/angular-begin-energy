@@ -42,6 +42,10 @@ export class SimulacaoAzulComponent implements OnInit {
         this.histKwhConsumoForaPontaTe = 1;
         this.histTarPriceConsumoForaPontaTe: any = 1;
         this.histPriceConsumoForaPontaTe: any = 1;
+        // op5
+        this.histKwhConsumoExcedntePonta = 1;
+        this.histTarPriceConsumoExcedentePonta: any = 1;
+        this.histPriceConsumoExcedentePonta: any = 1;
       }
   #2# Buscar tarifas da distribuidora do cliente para a modalidade origem no mes vigente
       1. Inicializar variaveis
@@ -55,6 +59,9 @@ export class SimulacaoAzulComponent implements OnInit {
         this.tarOrigemPontaTe = 1;
         //op 4
         this.tarOrigemForaPontaTe = 1;
+        //op 5
+        this.tarOrigemExcedentePonta = this.tarOrigemPontaTe;
+
       }
   #3# Calcular o valor total da modalidade origem utilizando os valores do histório e 
       as tarifas da modalidade origem. 
@@ -67,18 +74,18 @@ export class SimulacaoAzulComponent implements OnInit {
         this.resPriceOrigemTotal =
         math.multiply(this.histKwhConsumoForaPontaTusd, this.tarOrigemForaPontaTusd);
         //op 3 
-        this.resPriceOricemConsumoPontaTe = 
+        this.resPriceOrigemConsumoPontaTe = 
         math.multiply(this.histKwhConsumoPontaTe, this.tarOrigemPontaTe);
         //op 4 
-        this.resPriceOricemConsumoForaPontaTe = 
+        this.resPriceOrigemConsumoForaPontaTe = 
         math.multiply(this.histKwhConsumoForaPontaTe, this.tarOrigemForaPontaTe);
         // total
         this.esPriceOrigemTotal =
         math.sum(
            this.resPriceOrigemConsumoPontaTusd,
            this.resPriceOrigemConsumoForaPontaTusd,
-           this.resPriceOricemConsumoPontaTe,
-           this.resPriceOricemConsumoForaPontaTe, 
+           this.resPriceOrigemConsumoPontaTe,
+           this.resPriceOrigemConsumoForaPontaTe, 
 
         ) 
         return resPriceOrigemTotal
@@ -181,6 +188,11 @@ export class SimulacaoAzulComponent implements OnInit {
       histKwhConsumoForaPontaTe: any = 1;
       histTarPriceConsumoForaPontaTe: any = 1;
       histPriceConsumoForaPontaTe: any = 1;
+      //op 5
+      histKwhConsumoReativoExedentePonta: any = 1;
+      histTarConsumoReativoExcedentePonta: any = 1;
+      histPriceConsumoExcedentePonta: any = 1;
+
       /*histPriceNomeDaVariável -> Valores em Reais
     2. tarifas
       tarOrigemNomeDaVariavel -> Tarifas modalidade atual */
@@ -192,6 +204,8 @@ export class SimulacaoAzulComponent implements OnInit {
       tarOrigemPontaTe: any = 1;
       //op4
       tarOrigemForaPontaTe: any = 1;
+      //op 5
+      tarOrigemExcedentePonta: any = 1;
       /*tarDestinoNomeDaVariavel -> Tarifas modalidae destino
     3. fatores dos cálculos
       3.1 origem
@@ -202,9 +216,11 @@ export class SimulacaoAzulComponent implements OnInit {
         //op2 
         resPriceOrigemConsumoForaPontaTusd: any = 1;
         //op3 
-        resPriceOricemConsumoPontaTe: any = 1;
+        resPriceOrigemConsumoPontaTe: any = 1;
         //op4 
-        resPriceOricemConsumoForaPontaTe: any = 1;
+        resPriceOrigemConsumoForaPontaTe: any = 1;
+        //op5 
+        resPriceOrigemConsumoExcedentePontaTe: any = 1;
         /*resKwhOrigemNomeDoFator -> Fator cálculo origem em Kwh ou Reais
       3.2 cálculo
         resPriceCalcNomeDoFator -> Fator cálculo calculo em Reais
@@ -257,12 +273,19 @@ export class SimulacaoAzulComponent implements OnInit {
     3.3 {{ tarOrigemPontaTe }}
     3.4 {{ resPriceOrigemConsumoPontaTe }}
 
-    4.1 Consumo Ponta Fora TE
+    4.1 Consumo Fora Ponta TE
     4.2 {{ histKwhConsumoForaPontaTe }}
     4.3 {{ histTarConsumoForaPontaTe }}
     4.4 {{ histPriceConsumoForaPontaTe }}
     4.3 {{ tarOrigemForaPontaTe }}
     4.4 {{ resPriceOrigemConsumoForaPontaTe }}
+
+    5.1 Consumo Reativo Exedente Ponta
+    5.2 {{ histKwhConsumoReativoPonta }}
+    5.3 {{ histTarConsumoForaPontaTe }}
+    5.4 {{ histPriceConsumoForaPontaTe }}
+    5.3 {{ tarOrigemForaPontaTe }}
+    5.4 {{ resPriceOrigemConsumoForaPontaTe }}
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   #######################################################################################
   */
