@@ -19,12 +19,31 @@ export class SimulacaoAzulComponent implements OnInit {
   #1# Buscar histórico de consumo:
       1. Inicializar variaveis
       2. Função buscar variáveis no db
+      getHistorico() {
+        this.histKwhConsumoPontaTusd = 1;
+        this.histTarPriceConsumoPontaTusd: any = 1;
+        this.histPriceConsumoPontaTusd: any = 1;
+        if math.multiply(this.histTarPriceConsumoPontaTusd, 
+        console.log("gethist-op1 ok");
+      }
   #2# Buscar tarifas da distribuidora do cliente para a modalidade origem no mes vigente
       1. Inicializar variaveis
       2. Função buscar variáveis no db
+      getTarifaOrigem(origem: string) {
+        this.tarOrigemPontaTusd = 1;
+      }
   #3# Calcular o valor total da modalidade origem utilizando os valores do histório e 
       as tarifas da modalidade origem. 
       1. Inicializar variável para o valor calculado origem
+      calcOrigem() {
+        this.resPriceOrigemConsumoPontaTusd = 1;
+        this.resPriceOrigemTotal =
+        math.sum (
+           resPriceOrigemConsumoPontaTusd,
+
+        ) 
+        return resPriceOrigemTotal
+      }
       2. Inicializar variável para o status da comparacao histórico X calculado
       3. Tratar erro caso a diferença seja maior que o limite
       #3.1# Informar se o cálculo é exatamente igual
@@ -82,7 +101,48 @@ export class SimulacaoAzulComponent implements OnInit {
 
     ------------------- LISTA VARIÁVEIS PARA MÓDULO ------------------------------------
     ********* CONVENÇÃO SINTAXE  ************************
-    1. 
+    hist => histórico de consumo
+    Kwh => valores não monetários
+    Price => valores monetários
+    res => resultado de operação
+    origem => modalidade do cliente antes da categoria
+    destino => modalidade a ser simulada
+    calc ou calculo => simulação base sem slider
+    simulacao => valor resultante de novo calculo baseado no valor do slider
+    helperKwh => váriável de suporte com valor em Kwh ou similar
+    helperPrice => variável de suporte com valor em Reais
+    info => dados que são são valorem em Reais ou Kwh ou similar
+    X => indica resultado de comparação de dois valores
+    fator => variável recalculada antes da operacao
+    ---------------------------------------------------------------------------------------
+    s/n helpers */
+      origem: any = '';
+      destino: any = '';
+      resHelperInfoStatusHistXOrigem: any = 1;
+
+    /*
+    1. histórico
+      histKwhNomeDaVariável -> Valores Kwh ou similar */
+      histKwhConsumoPontaTusd: any = 1;
+      histTarPriceConsumoPontaTusd: any = 1;
+      histPriceConsumoPontaTusd: any = 1;
+      /*histPriceNomeDaVariável -> Valores em Reais
+    2. tarifas
+      tarOrigemNomeDaVariavel -> Tarifas modalidade atual */
+      tarOrigemPontaTusd: any = 1;
+      /*tarDestinoNomeDaVariavel -> Tarifas modalidae destino
+    3. fatores dos cálculos
+      3.1 origem
+        resPriceOrigemNomeDoFator -> Fator cálculo origem em Reais */
+        resPriceOrigemTotal: any = 1;
+        resPriceOrigemConsumoPontaTusd: any = 1;
+        /*resKwhOrigemNomeDoFator -> Fator cálculo origem em Kwh ou Reais
+      3.2 cálculo
+        resPriceCalcNomeDoFator -> Fator cálculo calculo em Reais
+        resKwhCalcNomeDoFator -> Fator cálculo calculo em Kwh ou Reais
+      3.3 simulacao
+        resPriceSimNomeDoFator -> Fator cálculo simulação em Reais
+        resKwhSimNomeDoFator -> Fator cálculo simulação em Kwh ou Reais
     *****************************************************
 
     1. Variáveis histórico
@@ -104,8 +164,15 @@ export class SimulacaoAzulComponent implements OnInit {
 
     -------------------- DISPLAY -------------------------------------------------------
     1. Tabela Dados gerais
-    | 1       | 2        | 3     | 
-    |variável | kwhHist | tarOri |
+    | 1       | 2        | 3     |  4           |  5            | 6                |  7              |  8            |  9               | 10                | 11              | 12          |  13          |  14            |    15          | 16          |   
+    |variável | histKwh | hisTarOri | histPrice |  histKwhOrigem | tarPriceOrigem  |  resPriceOrigem | histKmhOrigem |  fatorKwhDestino | fatorPriceDestino | resPriceDestino |  histKwhSim | tarPriceSim  |   fatorKwhSim | 
+    fatorPriceSim | resPriceSim |
+    1.1 Consumo Ponta tusd
+    1.2 {{ histKwhConsumoPontaTusd }}
+    1.3 {{ histTarConsumoPontaTusd }}
+    1.4 {{ histPriceConsumoPontaTusd }}
+    1.3 {{ tarOrigemPontaTusd }}
+    1.4 {{ resPriceOrigemConsumoPontaTusd }}
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   #######################################################################################
   */
