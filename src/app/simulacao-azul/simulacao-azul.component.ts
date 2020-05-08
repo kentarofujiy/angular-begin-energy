@@ -53,11 +53,16 @@ export class SimulacaoAzulComponent implements OnInit {
         math.multiply(this.histKwhConsumoPontaTusd, this.tarOrigemPontaTusd);
         //op 2
         this.resPriceOrigemTotal =
-
+        math.multiply(this.histKwhConsumoForaPontaTusd, this.tarOrigemForaPontaTusd);
+        //op 3 
+        this.resPriceOricemConsumoPontaTe = 
+        math.multiply(this.histKwhConsumoPontaTe, this.tarOrigemPontaTe)
         // total
-        math.sum (
-           resPriceOrigemConsumoPontaTusd,
-           resPriceOrigemConsumoForaPontaTusd,
+        this.esPriceOrigemTotal =
+        math.sum(
+           this.resPriceOrigemConsumoPontaTusd,
+           this.resPriceOrigemConsumoForaPontaTusd,
+           this.resPriceOricemConsumoPontaTe, 
 
         ) 
         return resPriceOrigemTotal
@@ -152,6 +157,10 @@ export class SimulacaoAzulComponent implements OnInit {
       histKwhConsumoForaPontaTusd: any = 1;
       histTarPriceConsumoForaPontaTusd: any = 1;
       histPriceConsumoForaPontaTusd: any = 1;
+      //op 3
+      histKwhConsumoPontaTe: any = 1;
+      histTarPriceConsumoPontaTe: any = 1;
+      histPriceConsumoPontaTe: any = 1;
       /*histPriceNomeDaVariável -> Valores em Reais
     2. tarifas
       tarOrigemNomeDaVariavel -> Tarifas modalidade atual */
@@ -159,6 +168,8 @@ export class SimulacaoAzulComponent implements OnInit {
       tarOrigemPontaTusd: any = 1;
       //op2
       tarOrigemForaPontaTusd: any = 1;
+      //op1
+      tarOrigemPontaTe: any = 1;
       /*tarDestinoNomeDaVariavel -> Tarifas modalidae destino
     3. fatores dos cálculos
       3.1 origem
@@ -168,6 +179,8 @@ export class SimulacaoAzulComponent implements OnInit {
         resPriceOrigemConsumoPontaTusd: any = 1;
         //op2 
         resPriceOrigemConsumoForaPontaTusd: any = 1;
+        //op3 
+        resPriceOricemConsumoPontaTe: any = 1;
         /*resKwhOrigemNomeDoFator -> Fator cálculo origem em Kwh ou Reais
       3.2 cálculo
         resPriceCalcNomeDoFator -> Fator cálculo calculo em Reais
@@ -212,6 +225,13 @@ export class SimulacaoAzulComponent implements OnInit {
     2.4 {{ histPriceConsumoForaPontaTusd }}
     2.3 {{ tarOrigemForaPontaTusd }}
     2.4 {{ resPriceOrigemConsumoForaPontaTusd }}
+
+    3.1 Consumo Ponta TE
+    3.2 {{ histKwhConsumoPontaTe }}
+    3.3 {{ histTarConsumoPontaTe }}
+    3.4 {{ histPriceConsumoPontaTe }}
+    3.3 {{ tarOrigemPontaTe }}
+    3.4 {{ resPriceOrigemConsumoPontaTe }}
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   #######################################################################################
   */
@@ -225,5 +245,3 @@ export class SimulacaoAzulComponent implements OnInit {
   }
 
 }
-
-op$*1
