@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { CalculoComponent } from './calculo/calculo.component';
 import { DestinoazulComponent } from  './destinoazul/destinoazul.component';
 import { StudentdetailsComponent } from './studentdetails/studentdetails.component';
 import { DynamicFormQuestionComponent } from './shared/dynamic-form-question.component';
 import { Ng5SliderModule } from 'ng5-slider';
-import { ChartsModule } from 'ng2-charts';
+import { ChartsModule } from 'ng2-charts'
+
 
 @NgModule({
   imports: [
@@ -36,6 +38,10 @@ import { ChartsModule } from 'ng2-charts';
     {
      path:'destinoazul',
      component:DestinoazulComponent 
+    },
+    {
+    path: 'calculos',
+    component:CalculoComponent
     }
   ]
   )],
@@ -47,6 +53,7 @@ import { ChartsModule } from 'ng2-charts';
     StudentdetailsComponent, 
     DestinoazulComponent,
     DynamicFormQuestionComponent,
+    CalculoComponent,
     ],
   bootstrap:[ 
     AppComponent
