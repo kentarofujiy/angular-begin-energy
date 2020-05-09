@@ -66,47 +66,90 @@ export class SimulacaoAzulComponent implements OnInit {
         this.histKwhDemandaRegistradaKwForaPontaTusd = 0;
         this.histTarDemandaRegistradaKwForaPontaTusd = 0;
         this.histPriceDemandaRegistradaKwForaPontaTusd = 0;
-        //op 12
+        //op12
         this.histKwhDemandaNaoUtilizadaPonta = 0;
         this.histTarDemandaNaoUtilizadaPonta = 0;
         this.histPriceDemandaNaoUtilizadaPonta = 0;
-        //op 13
+        //op13
         this.histKwhDemandaNaoUtilizadaForaPonta = 0;
         this.histTarDemandaNaoUtilizadaForaPonta = 0;
         this.histPriceDemandaNaoUtilizadaForaPonta = 0;
+        //op14
+        this.histKwhUltrapassagemDemandaPonta = 0;
+        this.histTarUltrapassagemDemandaPonta = 0;
+        this.hisPriceUltrapassagemDemandaPonta = 0;
+        //op15
+        this.histKwhUltrapassagemDemandaForaPonta = 0;
+        this.histTarUltrapassagemDemandaForaPonta = 0;
+        this.hisPriceUltrapassagemDemandaForaPonta = 0;
       }
   #2# Buscar tarifas da distribuidora do cliente para a modalidade origem no mes vigente
       1. Inicializar variaveis
       2. Função buscar variáveis no db
       getTarifaOrigem(origem: string) {
-        //op 1
+        //op1
         this.tarOrigemPontaTusd = 1;
-        //op 2
+        //op2
         this.tarOrigemForaPontaTusd = 1;
-        //op 3
+        //op3
         this.tarOrigemPontaTe = 1;
-        //op 4
+        //op4
         this.tarOrigemForaPontaTe = 1;
-        //op 5
+        //op5
         this.tarOrigemConsumoReativoExcedentePonta = this.tarOrigemPontaTe;
-        //op 6
+        //op6
         this.tarOrigemConsumoReativoExcedenteForaPonta = this.tarOrigemForaPontaTe;
-        //op 7
+        //op7
         // Acidional bandeiras Ponta valor no histórico
-        //op 8
+        //op8
         // Acidional bandeiras Fora Ponta valor no histórico
-        //op 9
+        //op9
         this.tarOrigemDemandaReativaExcedenteForaPontaTusd = 1;
-        //op 10
+        //op10
         this.tarOrigemDemandaRegistradaKwPontaTusd = 0;
-        //op 11
+        //op11
         this.tarOrigemDemandaRegistradaKwForaPontaTusd = 1;
-        //op 12
+        //op12
         this.tarOrigemDemandaNaoUtilizadaPonta = 0;
-        //op 13
-        this.tarOrigemDemandaNaoUtilizadaForaPonta = 0; 
+        //op13
+        this.tarOrigemDemandaNaoUtilizadaForaPonta = 0;
+        //op14
+        this.tarOrigemDemandaNaoUtilizadaPonta = 0;
+        //op15
+        this.tarOrigemDemandaNaoUtilizadaForaPonta = 0;
+     
 
       }
+  !!!! ATENÇÃO antes do calculo Origem existem variaveis que precisam ser calculadas!!!!!!!
+      1. Tolerância Contrato Ponta
+      2. Tolerância Contrato Fora Ponta
+      3. Ultrapassagem Demanda Ponta op14
+      4. Ultrapassagem Demanda Fora Ponta op 15
+      // se o resultado for negativo inverter e passar para
+      5. Demanda não utilizada Ponta
+      6. Demanada não utilizada Fora Ponta
+
+      calcToleranciaPonta() {
+        resKwhToleranciaDemandaContratadaPonta = 
+        math.multiply(this.histKwhDemandaContratadaPonta, 1.05);
+      }
+
+      calcToleranciaForaPonta() {
+        resKwhToleranciaDemandaContratadaForaPonta = 
+        math.multiply(this.histKwhDemandaContratadaForaPonta, 1.05);
+      }
+
+      // esta Função  retorna a quantidade de horas de ultrapassagem a ser cobrada em cada posto. 
+      // como ela utiliza o valor do cálculo da tolerância como parâmetro, caso esste seja zeno
+      // ela também retorna zero. 
+      setUltrapassagemDemanda() {
+        resKwhUltrapassagemDemandaPagarPonta = 
+        math.subtract(this.resKwhToleranciaDemandaContratadaPonta, this.histKwhDemandaRegistradaKwPontaTusd);
+        resKwhUltrapassagemDemandaPagarForaPonta = 
+        math.subtract(this.resKwhToleranciaDemandaContratadaForaPonta, this.histKwhDemandaRegistradaKwForaPontaTusd);
+      
+      }
+  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   #3# Calcular o valor total da modalidade origem utilizando os valores do histório e 
       as tarifas da modalidade origem. 
       1. Inicializar variável para o valor calculado origem
@@ -142,12 +185,19 @@ export class SimulacaoAzulComponent implements OnInit {
         //op11
         this.resPriceOrigemDemandaRegistradaKwForaPontaTusd =
         math.multiply(this.histKwhDemandaRegistradaKwForaPontaTusd, this.tarOrigemDemandaRegistradaKwForaPontaTusd);
-        //op12
+        //op12 (caso o cliente tenha um contrato esse é o Kw do contrato - a demanda registrada, a tarifa é zero, o resultado deve ser zero)
         this.resPriceOrigemDemandaNaoUtilizadaPonta =
         math.multiply(this.histKwhDemandaNaoUtilizadaPonta, this.tarOrigemDemandaNaoUtilizadaPonta);
         //op13
         this.resPriceOrigemDemandaNaoUtilizadaForaPonta =
         math.multiply(this.histKwhDemandaNaoUtilizadaForaPonta, this.tarOrigemDemandaNaoUtilizadaForaPonta);
+        //op14
+        this.resPriceOrigemUltrapassagemDemandaPonta =
+        math.multiply(this.resKwhUltrapassagemDemandaPagarPonta, this.tarOrigemUltrapassagemDemandaPonta);
+        //op15
+        this.resPriceOrigemUltrapassagemDemandaForaPonta =
+        math.multiply(this.resKwhUltrapassagemDemandaPagarForaPonta, this.tarOrigemUltrapassagemDemandaForaPonta);
+
         // total
         this.esPriceOrigemTotal =
         math.sum(
@@ -164,6 +214,8 @@ export class SimulacaoAzulComponent implements OnInit {
            this.resPriceOrigemDemandaRegistradaKwForaPontaTusd,                     //op11
            this.resPriceOrigemDemandaNaoUtilizadaPonta,                             //op12
            this.resPriceOrigemDemandaNaoUtilizadaForaPonta,                         //op13
+           this.resPriceOrigemUltrapassagemDemandaPonta,                            //op14
+           this.resPriceOrigemUltrapassagemDemandaForaPonta,                        //op15
         ) 
         return resPriceOrigemTotal
       }
@@ -249,6 +301,13 @@ export class SimulacaoAzulComponent implements OnInit {
     /*
     1. histórico
       histKwhNomeDaVariável -> Valores Kwh ou similar */
+      //geral
+      histKwhDemandaContratadaPonta: any = 0;
+      histKwhDemandaContratadaForaPonta: any = 0;
+      resKwhToleranciaDemandaContratadaPonta: any = 0;
+      resKwhToleranciaDemandaContratadaForaPonta: any = 0;
+      resKwhUltrapassagemDemandaPagarPonta: any = 0;
+      resKwhUltrapassagemDemandaPagarForaPonta: any = 0;
       //op 1
       histKwhConsumoPontaTusd: any = 1;
       histTarPriceConsumoPontaTusd: any = 1;
@@ -297,6 +356,14 @@ export class SimulacaoAzulComponent implements OnInit {
       histKwhDemandaNaoUtilizadaForaPonta: any = 0;
       histTarDemandaNaoUtilizadaForaPonta: any = 0;
       histPriceDemandaNaoUtilizadaForaPonta: any = 0;
+      //op14 
+      histKwhUltrapassagemDemandaPonta: any = 0;
+      histTarUltrapassagemDemandaPonta: any = 0;
+      histPriceUltrapassagemDemandaPonta: any = 0;
+      //op15 
+      histKwhUltrapassagemDemandaForaPonta: any = 0;
+      histTarUltrapassagemDemandaForaPonta: any = 0;
+      histPriceUltrapassagemDemandaForaPonta: any = 0;
 
       /*histPriceNomeDaVariável -> Valores em Reais
     2. tarifas
@@ -309,24 +376,28 @@ export class SimulacaoAzulComponent implements OnInit {
       tarOrigemPontaTe: any = 1;
       //op4
       tarOrigemForaPontaTe: any = 1;
-      //op 5
+      //op5
       tarOrigemConsumoReativoExcedentePonta: any = 1;
-      //op 6
+      //op6
       tarOrigemConsumoReativoExcedenteForaPonta: any = 1;
-      //op 7
+      //op7
       // Acidional bandeiras Ponta valor no histórico
-      //op 8
+      //op8
       // Acidional bandeiras Fora Ponta valor no histórico
-      //op 9
+      //op9
       tarOrigemDemandaReativaExcedenteForaPontaTusd: any = 1;
-      //op 10
+      //op10
       tarOrigemDemandaRegistradaKwPontaTusd: any = 0;
-      //op 11
+      //op11
       tarOrigemDemandaRegistradaKwForaPontaTusd: any = 0;
-      //op 12 
+      //op12 
       tarOrigemDemandaNaoUtilizadaPonta: any = 0;
-      //op 13 
+      //op13 
       tarOrigemDemandaNaoUtilizadaForaPonta: any = 0;
+      //op14
+      tarOrigemUltrapassagemDemandaPonta: any = 0;
+      //op15
+      tarOrigemUltapassagemDemandaForaPonta: any = 0;
       /*tarDestinoNomeDaVariavel -> Tarifas modalidae destino
     3. fatores dos cálculos
       3.1 origem
@@ -348,16 +419,21 @@ export class SimulacaoAzulComponent implements OnInit {
         resPriceOrigemAdicionalBandeirasPonta: any = 1;
         //op8
         resPriceOrigemAdicionalBandeirasForaPonta: any = 1;
-        //op 9 
+        //op9 
         resPriceOrigemDemandaReativaExcedenteForaPontaTusd: any = 1;
-        //op 10
+        //op10
         resPriceOrigemDemandaRegistradaKwPontaTusd: any = 0;
-        //op 11
+        //op11
         resPriceOrigemDemandaRegistradaKwForaPontaTusd: any = 0;
-        //op 12
+        //op12
         resPriceOrigemDemandaNaoUtilizadaPonta: any = 0;
-        //op 13
+        //op13
         resPriceOrigemDemandaNaoUtilizadaForaPonta: any = 0;
+        //op14
+        resPriceOrigemUltrapassagemDemandaPonta: any = 0;
+        //op15 
+        resPriceOrigemUltrapassagemDemandaForaPonta: any = 0;
+        //
         /*resKwhOrigemNomeDoFator -> Fator cálculo origem em Kwh ou Reais
       3.2 cálculo
         resPriceCalcNomeDoFator -> Fator cálculo calculo em Reais
@@ -387,8 +463,7 @@ export class SimulacaoAzulComponent implements OnInit {
     -------------------- DISPLAY -------------------------------------------------------
     1. Tabela Dados gerais
     | 1       | 2        | 3     |  4           |  5            | 6                |  7              |  8            |  9               | 10                | 11              | 12          |  13          |  14            |    15          | 16          |   
-    |variável | histKwh | hisTarOri | histPrice |  histKwhOrigem | tarPriceOrigem  |  resPriceOrigem | histKmhOrigem |  fatorKwhDestino | fatorPriceDestino | resPriceDestino |  histKwhSim | tarPriceSim  |   fatorKwhSim | 
-    fatorPriceSim | resPriceSim |
+    |variável | histKwh | hisTarOri | histPrice |  histKwhOrigem | tarPriceOrigem  |  resPriceOrigem | histKmhOrigem |  fatorKwhDestino | fatorPriceDestino | resPriceDestino |  histKwhSim | tarPriceSim  |   fatorKwhSim |   fatorPriceSim | resPriceSim |
     1.1 Consumo Ponta tusd
     1.2 {{ histKwhConsumoPontaTusd }}
     1.3 {{ histTarConsumoPontaTusd }}
@@ -479,6 +554,20 @@ export class SimulacaoAzulComponent implements OnInit {
     13.4 {{ histPriceDemandaNaoUtilizadaForaPonta }}
     13.5 {{ tarOrigemDemandaNaoUtilizadaForaPonta }}
     13.6 {{ resPriceOrigemDemandaNaoUtilizadaForaPonta }}
+
+    14.1 Ultrapassagem Demanda Contratada Ponta
+    14.1 {{ histKwhUltrapassagemDemandaPonta }}
+    14.2 {{ histTarUltrapassagemDemandaPonta }}
+    14.3 {{ histPriceUltrapassagemDemandaPonta }}
+    14.4 {{ tarOrigemUltrapassagemDemandaPonta }}
+    14.6 {{ resPriceOrigemUltrapassagemDemandaPonta }}
+
+    15.1 Ultrapassagem Demanda Contratada Fora Ponta
+    15.1 {{ histKwhUltrapassagemDemandaForaPonta }}
+    15.2 {{ histTarUltrapassagemDemandaForaPonta }}
+    15.3 {{ histPriceUltrapassagemDemandaForaPonta }}
+    15.4 {{ tarOrigemUltrapassagemDemandaForaPonta }}
+    15.6 {{ resPriceOrigemUltrapassagemDemandaForaPonta }}
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   #######################################################################################
   */
