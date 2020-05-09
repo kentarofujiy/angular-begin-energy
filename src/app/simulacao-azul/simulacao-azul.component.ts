@@ -16,6 +16,28 @@ export class SimulacaoAzulComponent implements OnInit {
   /*
   ########################## SIMULACAO VERDE PARA AZUL ##################################
 
+  begin() {
+    this.initHistVars();
+    this.getHistorico;
+  }
+
+  beginOrigin() {
+    initOrigemTars();
+    initOrigemVals();
+    getTarifaOrigem();
+    calcToleranciaPonta();
+    calcToleranciaForaPonta();
+    setUltrapassagemDemanda();
+    calcOrigem();
+  }
+
+  beginDestino() {
+    initDestinoKwh();
+    initDestinoTars();
+    initDestinoVals();
+    calcKwhDestinoPontaTusd();
+    calcDestino();
+  }
 
 
   %%%%%%%%%%%%%%%%%%%%%%%%%% REGISTRO FUNCOES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -767,6 +789,8 @@ export class SimulacaoAzulComponent implements OnInit {
     5.4 {{ histPriceConsumoReativoExcedentePonta }}
     5.5 {{ tarOrigemConsumoReativoExcedenteForaPonta }}
     5.6 {{ resPriceOrigemConsumoReativoExcedentePonta }}
+    5.7 {{ tarDestinoConsumoReativoExcedenteForaPonta }}
+    5.8 {{ resPriceDestinoConsumoReativoExcedentePonta }}
 
     6.1 Consumo Reativo Exedente Fora Ponta
     6.2 {{ histKwhConsumoReativoExcedenteForaPonta }}
@@ -774,6 +798,8 @@ export class SimulacaoAzulComponent implements OnInit {
     6.4 {{ histPriceConsumoReativoExcedenteForaPonta }}
     6.5 {{ tarOrigemConsumoReativoExcedenteForaPonta }}
     6.6 {{ resPriceOrigemConsumoReativoExcedenteForaPonta }}
+    6.7 {{ tarDestinoConsumoReativoExcedenteForaPonta }}
+    6.8 {{ resPriceDestinoConsumoReativoExcedenteForaPonta }}
 
     7.1 Adicional Bandeiras Ponta
     7.2 'N/D'
@@ -781,6 +807,9 @@ export class SimulacaoAzulComponent implements OnInit {
     7.4 {{ histPriceAdicionalBandeirasPonta }}
     7.5 'N/D'
     7.6 {{ resPriceOrigemAdicionalBandeirasPonta }}
+    7.7 'N/D'
+    7.8 {{ resPriceDestinoAdicionalBandeirasPonta }}
+    
 
     8.1 Adicional Bandeiras Fora Ponta
     8.2 'N/D'
@@ -788,6 +817,8 @@ export class SimulacaoAzulComponent implements OnInit {
     8.4 {{ histPriceAdicionalBandeirasForaPonta }}
     8.5 'N/D'
     8.6 {{ resPriceOrigemAdicionalBandeirasForaPonta }}
+    8.7 'N/D'
+    8.8 {{ resPriceDestinoAdicionalBandeirasForaPonta }}
 
     9.1 Demanda Reativa Exedente Fora Ponta TUSD
     9.2 {{ histKwhDemandaReativaExcedenteForaPontaTusd }}
@@ -795,6 +826,8 @@ export class SimulacaoAzulComponent implements OnInit {
     9.4 {{ histPriceDemandaReativaExcedenteForaPontaTusd }}
     9.5 {{ tarOrigemDemandaReativaExcedenteForaPontaTusd }}
     9.6 {{ resPriceOrigemDemandaReativaExcedenteForaPontaTusd }} 
+    9.7 {{ tarDestinoDemandaReativaExcedenteForaPontaTusd }}
+    9.8 {{ resPriceDestinoDemandaReativaExcedenteForaPontaTusd }} 
 
     10.1 Demanda Registrada Ponta TUSD
     10.2 {{ histKwhDemandaRegistradaKwPontaTusd }}
@@ -802,6 +835,9 @@ export class SimulacaoAzulComponent implements OnInit {
     10.4 {{ histPriceDemandaRegistradaKwPontaTusd }}
     10.5 {{ tarOrigemDemandaRegistradaKwPontaTusd }}
     10.6 {{ resPriceOrigemDemandaRegistradaKwPontaTusd }}
+    10.7 {{ tarDestinoDemandaRegistradaKwPontaTusd }}
+    10.8 {{ resPriceDestinoDemandaRegistradaKwPontaTusd }}
+
 
     11.1 Demanda Registrada Fora Ponta TUSD
     11.2 {{ histKwhDemandaRegistradaKwForaPontaTusd }}
@@ -809,6 +845,8 @@ export class SimulacaoAzulComponent implements OnInit {
     11.4 {{ histPriceDemandaRegistradaKwForaPontaTusd }}
     11.5 {{ tarOrigemDemandaRegistradaKwForaPontaTusd }}
     11.6 {{ resPriceOrigemDemandaRegistradaForaPontaTusd }}
+    11.7 {{ tarDestinoDemandaRegistradaKwForaPontaTusd }}
+    11.8{{ resPriceDestinoDemandaRegistradaForaPontaTusd }}
 
     12.1 Demanda Não Utilizada Ponta
     12.2 {{ histKwhDemandaNaoUtilizadaPonta }}
@@ -816,6 +854,8 @@ export class SimulacaoAzulComponent implements OnInit {
     12.4 {{ histPriceDemandaNaoUtilizadaPonta }}
     12.5 {{ tarOrigemDemandaNaoUtilizadaPonta }}
     12.6 {{ resPriceOrigemDemandaNaoUtilizadaPonta }}
+    12.7 {{ tarDestinoDemandaNaoUtilizadaPonta }}
+    12.8 {{ resPriceDestinoDemandaNaoUtilizadaPonta }}
 
     13.1 Demanda Não Utilizada Fora Ponta
     13.2 {{ histKwhDemandaNaoUtilizadaForaPonta }}
@@ -823,13 +863,18 @@ export class SimulacaoAzulComponent implements OnInit {
     13.4 {{ histPriceDemandaNaoUtilizadaForaPonta }}
     13.5 {{ tarOrigemDemandaNaoUtilizadaForaPonta }}
     13.6 {{ resPriceOrigemDemandaNaoUtilizadaForaPonta }}
+    13.7 {{ tarDestinoDemandaNaoUtilizadaForaPonta }}
+    13.8 {{ resPriceDestinoDemandaNaoUtilizadaForaPonta }}
+    
 
     14.1 Ultrapassagem Demanda Contratada Ponta
-    14.1 {{ histKwhUltrapassagemDemandaPonta }}
-    14.2 {{ histTarUltrapassagemDemandaPonta }}
-    14.3 {{ histPriceUltrapassagemDemandaPonta }}
-    14.4 {{ tarOrigemUltrapassagemDemandaPonta }}
+    14.2 {{ histKwhUltrapassagemDemandaPonta }}
+    14.3 {{ histTarUltrapassagemDemandaPonta }}
+    14.4 {{ histPriceUltrapassagemDemandaPonta }}
+    14.5 {{ tarOrigemUltrapassagemDemandaPonta }}
     14.6 {{ resPriceOrigemUltrapassagemDemandaPonta }}
+    14.7 {{ tarDestinoUltrapassagemDemandaPonta }}
+    14.8 {{ resPriceDestinoUltrapassagemDemandaPonta }}
 
     15.1 Ultrapassagem Demanda Contratada Fora Ponta
     15.1 {{ histKwhUltrapassagemDemandaForaPonta }}
@@ -837,6 +882,8 @@ export class SimulacaoAzulComponent implements OnInit {
     15.3 {{ histPriceUltrapassagemDemandaForaPonta }}
     15.4 {{ tarOrigemUltrapassagemDemandaForaPonta }}
     15.6 {{ resPriceOrigemUltrapassagemDemandaForaPonta }}
+    15.7 {{ tarDestinoUltrapassagemDemandaForaPonta }}
+    15.8 {{ resPriceDestinoUltrapassagemDemandaForaPonta }}
 
     16.1 Outros
     16.2 'N/D'
@@ -844,6 +891,8 @@ export class SimulacaoAzulComponent implements OnInit {
     16.4 {{ histPriceOutros }}
     16.5 'N/D'
     15.6 {{ resPriceOrigemOutros }}
+    16.5 'N/D'
+    15.6 {{ resPriceDestinoOutros }}
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   #######################################################################################
   */
