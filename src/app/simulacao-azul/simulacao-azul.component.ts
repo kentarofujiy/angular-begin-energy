@@ -20,6 +20,8 @@ export class SimulacaoAzulComponent implements OnInit {
       1. Inicializar variaveis
       2. Função buscar variáveis no db
       getHistorico() {
+        // geral
+        this.histPriceTotalFatura = 1;
         // op1
         this.histKwhConsumoPontaTusd = 1;
         this.histTarPriceConsumoPontaTusd = 1;
@@ -227,6 +229,17 @@ export class SimulacaoAzulComponent implements OnInit {
         return resPriceOrigemTotal
       }
       2. Inicializar variável para o status da comparacao histórico X calculado
+      // inicializado no helpers
+      calcHistXoriginVariation() {
+        this.resHelperHistXOrigemLimit =
+        math.multiply(this.histPriceTotalFatura, 1.10);
+        if this.resPriceOrigemTotal >= this.resHelperHistXOrigemLimit {
+          this.resHelperInfoStatusHistXOrigem = 'Histórico e origem não batem'
+        } else {
+          'Histórico e origem batem'
+        }
+      }
+  
       3. Tratar erro caso a diferença seja maior que o limite
       #3.1# Informar se o cálculo é exatamente igual
       #3.2# Se não for igual passar se a diferença for inferior a 5% erro se maior
@@ -303,12 +316,14 @@ export class SimulacaoAzulComponent implements OnInit {
     /*s/n helpers */
       origem: any = '';
       destino: any = '';
-      resHelperInfoStatusHistXOrigem: any = 1;
-
+      resHelperHistXOrigemLimit: any = 1;
+      resHelperHistXOrigemDifference: any = 1;
+      resHelperInfoStatusHistXOrigem: any = '';
     /*
     1. histórico
       histKwhNomeDaVariável -> Valores Kwh ou similar */
       //geral
+      histPriceTotalFatura: any = 0;
       histKwhDemandaContratadaPonta: any = 0;
       histKwhDemandaContratadaForaPonta: any = 0;
       resKwhToleranciaDemandaContratadaPonta: any = 0;
@@ -458,9 +473,107 @@ export class SimulacaoAzulComponent implements OnInit {
 
     1. Variáveis histórico
     2. Tarifas origem
-    3. Tarifas destino
-    4. Variaveis resultado origem
-    5. Variaveis resultado destino
+    3. Kwh destino*/
+        //op1 
+        kwhDestinoConsumoPontaTusd: any = 1;
+        //op2 
+        kwhDestinoConsumoForaPontaTusd: any = 1;
+        //op3 
+        kwhDestinoConsumoPontaTe: any = 1;
+        //op4 
+        kwhDestinoConsumoForaPontaTe: any = 1;
+        //op5 
+        kwhDestinoConsumoReativoExcedentePonta: any = 1;
+        //op6 
+        kwhDestinoConsumoReativoExcedenteForaPonta: any = 1;
+        //op7
+        kwhDestinoAdicionalBandeirasPonta: any = 1;
+        //op8
+        kwhDestinoAdicionalBandeirasForaPonta: any = 1;
+        //op9 
+        kwhDestinoDemandaReativaExcedenteForaPontaTusd: any = 1;
+        //op10
+        kwhDestinoDemandaRegistradaKwPontaTusd: any = 0;
+        //op11
+        kwhDestinoDemandaRegistradaKwForaPontaTusd: any = 0;
+        //op12
+        kwhDestinoDemandaNaoUtilizadaPonta: any = 0;
+        //op13
+        kwhDestinoDemandaNaoUtilizadaForaPonta: any = 0;
+        //op14
+        kwhDestinoUltrapassagemDemandaPonta: any = 0;
+        //op15 
+        kwhDestinoUltrapassagemDemandaForaPonta: any = 0;
+        //op16
+        kwhDestinoOutros: any = 0;
+   /* 3. Tarifas destino */
+     //op1
+      tarDestinoPontaTusd: any = 1;
+      //op2
+      tarDestinoForaPontaTusd: any = 1;
+      //op3
+      tarDestinoPontaTe: any = 1;
+      //op4
+      tarDestinoForaPontaTe: any = 1;
+      //op5
+      tarDestinoConsumoReativoExcedentePonta: any = 1;
+      //op6
+      tarDestinoConsumoReativoExcedenteForaPonta: any = 1;
+      //op7
+      // Acidional bandeiras Ponta valor no histórico
+      //op8
+      // Acidional bandeiras Fora Ponta valor no histórico
+      //op9
+      tarDestinoDemandaReativaExcedenteForaPontaTusd: any = 1;
+      //op10
+      tarDestinoDemandaRegistradaKwPontaTusd: any = 0;
+      //op11
+      tarDestinoDemandaRegistradaKwForaPontaTusd: any = 0;
+      //op12 
+      tarDestinoDemandaNaoUtilizadaPonta: any = 0;
+      //op13 
+      tarDestinoDemandaNaoUtilizadaForaPonta: any = 0;
+      //op14
+      tarDestinoUltrapassagemDemandaPonta: any = 0;
+      //op15
+      tarDestinoUltapassagemDemandaForaPonta: any = 0;
+      //op16
+      // outros nao tem tarifa
+  /*  4. Variaveis resultado origem */
+        resPriceDestinoTotal: any = 1;
+        //op1 
+        resPriceDestinoConsumoPontaTusd: any = 1;
+        //op2 
+        resPriceDestinoConsumoForaPontaTusd: any = 1;
+        //op3 
+        resPriceDestinoConsumoPontaTe: any = 1;
+        //op4 
+        resPriceDestinoConsumoForaPontaTe: any = 1;
+        //op5 
+        resPriceDestinoConsumoReativoExcedentePonta: any = 1;
+        //op6 
+        resPriceDestinoConsumoReativoExcedenteForaPonta: any = 1;
+        //op7
+        resPriceDestinoAdicionalBandeirasPonta: any = 1;
+        //op8
+        resPriceDestinoAdicionalBandeirasForaPonta: any = 1;
+        //op9 
+        resPriceDestinoDemandaReativaExcedenteForaPontaTusd: any = 1;
+        //op10
+        resPriceDestinoDemandaRegistradaKwPontaTusd: any = 0;
+        //op11
+        resPriceDestinoDemandaRegistradaKwForaPontaTusd: any = 0;
+        //op12
+        resPriceDestinoDemandaNaoUtilizadaPonta: any = 0;
+        //op13
+        resPriceDestinoDemandaNaoUtilizadaForaPonta: any = 0;
+        //op14
+        resPriceDestinoUltrapassagemDemandaPonta: any = 0;
+        //op15 
+        resPriceDestinoUltrapassagemDemandaForaPonta: any = 0;
+        //op16
+        resPriceDestinoOutros: any = 0;  
+  /*  5. Variaveis resultado destino
     6. Variáveis resultado simulacao
     7. Variáveis slider
     8. Variáveis disponibilidade energética
