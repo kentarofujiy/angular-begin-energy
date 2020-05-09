@@ -82,6 +82,8 @@ export class SimulacaoAzulComponent implements OnInit {
         this.histKwhUltrapassagemDemandaForaPonta = 0;
         this.histTarUltrapassagemDemandaForaPonta = 0;
         this.hisPriceUltrapassagemDemandaForaPonta = 0;
+        //op16
+        this.histPriceOutros = 0;
       }
   #2# Buscar tarifas da distribuidora do cliente para a modalidade origem no mes vigente
       1. Inicializar variaveis
@@ -117,6 +119,8 @@ export class SimulacaoAzulComponent implements OnInit {
         this.tarOrigemDemandaNaoUtilizadaPonta = 0;
         //op15
         this.tarOrigemDemandaNaoUtilizadaForaPonta = 0;
+        //op16
+        // outros tao tem tarifa
      
 
       }
@@ -197,6 +201,8 @@ export class SimulacaoAzulComponent implements OnInit {
         //op15
         this.resPriceOrigemUltrapassagemDemandaForaPonta =
         math.multiply(this.resKwhUltrapassagemDemandaPagarForaPonta, this.tarOrigemUltrapassagemDemandaForaPonta);
+        //op16
+        this.resPriceOrigemOutros = this.histPriceOutros;
 
         // total
         this.esPriceOrigemTotal =
@@ -216,6 +222,7 @@ export class SimulacaoAzulComponent implements OnInit {
            this.resPriceOrigemDemandaNaoUtilizadaForaPonta,                         //op13
            this.resPriceOrigemUltrapassagemDemandaPonta,                            //op14
            this.resPriceOrigemUltrapassagemDemandaForaPonta,                        //op15
+           this.resPriceOrigemOutros                                                //op16
         ) 
         return resPriceOrigemTotal
       }
@@ -364,6 +371,8 @@ export class SimulacaoAzulComponent implements OnInit {
       histKwhUltrapassagemDemandaForaPonta: any = 0;
       histTarUltrapassagemDemandaForaPonta: any = 0;
       histPriceUltrapassagemDemandaForaPonta: any = 0;
+      //op15 outros somente um valor
+      histPriceOutros: any = 0;
 
       /*histPriceNomeDaVariável -> Valores em Reais
     2. tarifas
@@ -398,6 +407,8 @@ export class SimulacaoAzulComponent implements OnInit {
       tarOrigemUltrapassagemDemandaPonta: any = 0;
       //op15
       tarOrigemUltapassagemDemandaForaPonta: any = 0;
+      //op16
+      // outros nao tem tarifa
       /*tarDestinoNomeDaVariavel -> Tarifas modalidae destino
     3. fatores dos cálculos
       3.1 origem
@@ -433,6 +444,8 @@ export class SimulacaoAzulComponent implements OnInit {
         resPriceOrigemUltrapassagemDemandaPonta: any = 0;
         //op15 
         resPriceOrigemUltrapassagemDemandaForaPonta: any = 0;
+        //op16
+        resPriceOrigemOutros: any = 0;
         //
         /*resKwhOrigemNomeDoFator -> Fator cálculo origem em Kwh ou Reais
       3.2 cálculo
@@ -568,6 +581,13 @@ export class SimulacaoAzulComponent implements OnInit {
     15.3 {{ histPriceUltrapassagemDemandaForaPonta }}
     15.4 {{ tarOrigemUltrapassagemDemandaForaPonta }}
     15.6 {{ resPriceOrigemUltrapassagemDemandaForaPonta }}
+
+    16.1 Outros
+    16.2 'N/D'
+    16.3 'N/D'
+    16.4 {{ histPriceOutros }}
+    16.5 'N/D'
+    15.6 {{ resPriceOrigemOutros }}
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   #######################################################################################
   */
