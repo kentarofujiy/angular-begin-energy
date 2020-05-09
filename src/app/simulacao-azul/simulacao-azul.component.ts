@@ -277,9 +277,13 @@ export class SimulacaoAzulComponent implements OnInit {
         5.2. Inicializar fatores do cácculo   
   #6# Calcular fator multiplicador base
     0. Identificar operações que variam de acordo com o multiplicador
-      
+      1. Consumo ponta tusd (op1)
+      2. Consumo ativo ponta te (op3)
+      3. Demanda registrada KW ponta tusd (op10)
     1. Inicializar variável para o fator
+    // fator base no helper
     2. Inicializar variável para o Consumo Ponta calculado
+    
     3. Inicializar variável para o Consumo Ponta simulado
     4. Inicializar variável para o valor máximo do multiplicador
   #7# Cálculo destino base
@@ -344,6 +348,7 @@ export class SimulacaoAzulComponent implements OnInit {
       resHelperHistXOrigemLimit: any = 1;
       resHelperHistXOrigemDifference: any = 1;
       resHelperInfoStatusHistXOrigem: any = '';
+      helperFatorBase: any = 1;
     /*
     1. histórico
       histKwhNomeDaVariável -> Valores Kwh ou similar */
