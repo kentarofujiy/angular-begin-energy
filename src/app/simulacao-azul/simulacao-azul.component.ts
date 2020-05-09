@@ -66,6 +66,14 @@ export class SimulacaoAzulComponent implements OnInit {
         this.histKwhDemandaRegistradaKwForaPontaTusd = 0;
         this.histTarDemandaRegistradaKwForaPontaTusd = 0;
         this.histPriceDemandaRegistradaKwForaPontaTusd = 0;
+        //op 12
+        this.histKwhDemandaNaoUtilizadaPonta = 0;
+        this.histTarDemandaNaoUtilizadaPonta = 0;
+        this.histPriceDemandaNaoUtilizadaPonta = 0;
+        //op 13
+        this.histKwhDemandaNaoUtilizadaForaPonta = 0;
+        this.histTarDemandaNaoUtilizadaForaPonta = 0;
+        this.histPriceDemandaNaoUtilizadaForaPonta = 0;
       }
   #2# Buscar tarifas da distribuidora do cliente para a modalidade origem no mes vigente
       1. Inicializar variaveis
@@ -93,57 +101,69 @@ export class SimulacaoAzulComponent implements OnInit {
         this.tarOrigemDemandaRegistradaKwPontaTusd = 0;
         //op 11
         this.tarOrigemDemandaRegistradaKwForaPontaTusd = 1;
+        //op 12
+        this.tarOrigemDemandaNaoUtilizadaPonta = 0;
+        //op 13
+        this.tarOrigemDemandaNaoUtilizadaForaPonta = 0; 
 
       }
   #3# Calcular o valor total da modalidade origem utilizando os valores do histório e 
       as tarifas da modalidade origem. 
       1. Inicializar variável para o valor calculado origem
       calcOrigem() {
-        //op 1
+        //op1
         this.resPriceOrigemConsumoPontaTusd = 
         math.multiply(this.histKwhConsumoPontaTusd, this.tarOrigemPontaTusd);
-        //op 2
+        //op2
         this.resPriceOrigemTotal =
         math.multiply(this.histKwhConsumoForaPontaTusd, this.tarOrigemForaPontaTusd);
-        //op 3 
+        //op3 
         this.resPriceOrigemConsumoPontaTe = 
         math.multiply(this.histKwhConsumoPontaTe, this.tarOrigemPontaTe);
-        //op 4 
+        //op4 
         this.resPriceOrigemConsumoForaPontaTe = 
         math.multiply(this.histKwhConsumoForaPontaTe, this.tarOrigemForaPontaTe);
-        //op 5
+        //op5
         this.resPriceOrigemConsumoReativoExcedentePonta = 
         math.multiply(this.histKwhConsumoReativoExedentePonta, this.tarOrigemExcedentePonta);
-        //op 6
+        //op6
         this.resPriceOrigemConsumoExcedenteForaPontaTe = 
         math.multiply(this.histKwhConsumoReativoExedenteForaPonta, this.tarOrigemConsumoReativoExcedenteForaPonta);
-        //op 7
+        //op7
         this.resPriceOrigemAdicionalBandeirasPonta = this.histPriceAdicionalBandeirasPonta;
-        //op 8
+        //op8
         this.resPriceOrigemAdicionalBandeirasForaPonta = this.histPriceAdicionalBandeirasForaPonta;
-        //op 9 
+        //op9 
         this.resPriceOrigemDemandaReativaExcedenteForaPontaTusd =
         math.multiply(this.histKwhDemandaReativaExcedenteForaPontaTusd, this.tarOrigemDemandaReativaExcedenteForaPontaTusd);
-        //op 10
+        //op10
         this.resPriceOrigemDemandaRegistradaKwPontaTusd =
         math.multiply(this.histKwhDemandaRegistradaKwPontaTusd, this.tarOrigemDemandaRegistradaKwPontaTusd);
-        //op 11
+        //op11
         this.resPriceOrigemDemandaRegistradaKwForaPontaTusd =
         math.multiply(this.histKwhDemandaRegistradaKwForaPontaTusd, this.tarOrigemDemandaRegistradaKwForaPontaTusd);
+        //op12
+        this.resPriceOrigemDemandaNaoUtilizadaPonta =
+        math.multiply(this.histKwhDemandaNaoUtilizadaPonta, this.tarOrigemDemandaNaoUtilizadaPonta);
+        //op13
+        this.resPriceOrigemDemandaNaoUtilizadaForaPonta =
+        math.multiply(this.histKwhDemandaNaoUtilizadaForaPonta, this.tarOrigemDemandaNaoUtilizadaForaPonta);
         // total
         this.esPriceOrigemTotal =
         math.sum(
-           this.resPriceOrigemConsumoPontaTusd,        //op 1
-           this.resPriceOrigemConsumoForaPontaTusd,    //op 2
-           this.resPriceOrigemConsumoPontaTe,          //op 3
-           this.resPriceOrigemConsumoForaPontaTe,      //op 4
-           this.resPriceOrigemConsumoReativoExcedentePonta, //op 5
-           this.resPriceOrigemConsumoReativoExcedenteForaPonta,  //op6
-           this.resPriceOrigemAdicionalBandeirasPonta, //op 7
-           this.resPriceOrigemAdicionalBandeirasForaPonta, //op 8
-           this.resPriceOrigemDemandaReativaExcedenteForaPontaTusd, //op 9
-           this.resPriceOrigemDemandaRegistradaKwPontaTusd, //op 10
-           this.resPriceOrigemDemandaRegistradaKwForaPontaTusd, //op 11
+           this.resPriceOrigemConsumoPontaTusd,                                     //op1
+           this.resPriceOrigemConsumoForaPontaTusd,                                 //op2
+           this.resPriceOrigemConsumoPontaTe,                                       //op3
+           this.resPriceOrigemConsumoForaPontaTe,                                   //op4
+           this.resPriceOrigemConsumoReativoExcedentePonta,                         //op5
+           this.resPriceOrigemConsumoReativoExcedenteForaPonta,                     //op6
+           this.resPriceOrigemAdicionalBandeirasPonta,                              //op7
+           this.resPriceOrigemAdicionalBandeirasForaPonta,                          //op8
+           this.resPriceOrigemDemandaReativaExcedenteForaPontaTusd,                 //op9
+           this.resPriceOrigemDemandaRegistradaKwPontaTusd,                         //op10
+           this.resPriceOrigemDemandaRegistradaKwForaPontaTusd,                     //op11
+           this.resPriceOrigemDemandaNaoUtilizadaPonta,                             //op12
+           this.resPriceOrigemDemandaNaoUtilizadaForaPonta,                         //op13
         ) 
         return resPriceOrigemTotal
       }
@@ -269,6 +289,14 @@ export class SimulacaoAzulComponent implements OnInit {
       histKwhDemandaRegistradaKwForaPontaTusd: any = 0;
       histTarDemandaRegistradaKwForaPontaTusd: any = 0;
       histPriceDemandaRegistradaKwForaPontaTusd: any = 0;
+      //op12 Demanda não utilizada ponta
+      histKwhDemandaNaoUtilizadaPonta: any = 0;
+      histTarDemandaNaoUtilizadaPonta: any = 0;
+      histPriceDemandaNaoUtilizadaPonta: any = 0;
+      //op13 Demanda não utilizada Fora ponta
+      histKwhDemandaNaoUtilizadaForaPonta: any = 0;
+      histTarDemandaNaoUtilizadaForaPonta: any = 0;
+      histPriceDemandaNaoUtilizadaForaPonta: any = 0;
 
       /*histPriceNomeDaVariável -> Valores em Reais
     2. tarifas
@@ -295,6 +323,10 @@ export class SimulacaoAzulComponent implements OnInit {
       tarOrigemDemandaRegistradaKwPontaTusd: any = 0;
       //op 11
       tarOrigemDemandaRegistradaKwForaPontaTusd: any = 0;
+      //op 12 
+      tarOrigemDemandaNaoUtilizadaPonta: any = 0;
+      //op 13 
+      tarOrigemDemandaNaoUtilizadaForaPonta: any = 0;
       /*tarDestinoNomeDaVariavel -> Tarifas modalidae destino
     3. fatores dos cálculos
       3.1 origem
@@ -321,7 +353,11 @@ export class SimulacaoAzulComponent implements OnInit {
         //op 10
         resPriceOrigemDemandaRegistradaKwPontaTusd: any = 0;
         //op 11
-        resPriceOrigemDemandaRegistradaKwForaPontaTusd: any = 0; 
+        resPriceOrigemDemandaRegistradaKwForaPontaTusd: any = 0;
+        //op 12
+        resPriceOrigemDemandaNaoUtilizadaPonta: any = 0;
+        //op 13
+        resPriceOrigemDemandaNaoUtilizadaForaPonta: any = 0;
         /*resKwhOrigemNomeDoFator -> Fator cálculo origem em Kwh ou Reais
       3.2 cálculo
         resPriceCalcNomeDoFator -> Fator cálculo calculo em Reais
@@ -429,6 +465,20 @@ export class SimulacaoAzulComponent implements OnInit {
     11.4 {{ histPriceDemandaRegistradaKwForaPontaTusd }}
     11.5 {{ tarOrigemDemandaRegistradaKwForaPontaTusd }}
     11.6 {{ resPriceOrigemDemandaRegistradaForaPontaTusd }}
+
+    12.1 Demanda Não Utilizada Ponta
+    12.2 {{ histKwhDemandaNaoUtilizadaPonta }}
+    12.3 {{ histTarDemandaNaoUtilizadaPonta }}
+    12.4 {{ histPriceDemandaNaoUtilizadaPonta }}
+    12.5 {{ tarOrigemDemandaNaoUtilizadaPonta }}
+    12.6 {{ resPriceOrigemDemandaNaoUtilizadaPonta }}
+
+    13.1 Demanda Não Utilizada Fora Ponta
+    13.2 {{ histKwhDemandaNaoUtilizadaForaPonta }}
+    13.3 {{ histTarDemandaNaoUtilizadaForaPonta }}
+    13.4 {{ histPriceDemandaNaoUtilizadaForaPonta }}
+    13.5 {{ tarOrigemDemandaNaoUtilizadaForaPonta }}
+    13.6 {{ resPriceOrigemDemandaNaoUtilizadaForaPonta }}
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   #######################################################################################
   */
