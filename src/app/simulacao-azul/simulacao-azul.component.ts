@@ -15,6 +15,29 @@ import { Router } from '@angular/router';
 export class SimulacaoAzulComponent implements OnInit {
   /*
   ########################## SIMULACAO VERDE PARA AZUL ##################################
+
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%% REGISTRO FUNCOES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    initHistVars();
+    getHistorico();
+    initOrigemTars();
+    getTarifaOrigem();
+    initOrigemVals();
+    calcToleranciaPonta();
+    calcToleranciaForaPonta();
+    setUltrapassagemDemanda();
+    calcOrigem();
+    initDestinoKwh();
+    initDestinoTars();
+    initDestinoVals();
+    setDestinoKwh();
+    getDestinoTars();
+    initFactors();
+    calcBaseFactors()
+    calcDestino();
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   ********************* considerar os dados necessários para o cálculo ******************
   #1# Buscar histórico de consumo:
       1. Inicializar variaveis
@@ -207,7 +230,7 @@ export class SimulacaoAzulComponent implements OnInit {
         this.resPriceOrigemOutros = this.histPriceOutros;
 
         // total
-        this.esPriceOrigemTotal =
+        this.resPriceOrigemTotal =
         math.sum(
            this.resPriceOrigemConsumoPontaTusd,                                     //op1
            this.resPriceOrigemConsumoForaPontaTusd,                                 //op2
@@ -253,6 +276,8 @@ export class SimulacaoAzulComponent implements OnInit {
         5.1. Inicializar variaveis a serem calculadas
         5.2. Inicializar fatores do cácculo   
   #6# Calcular fator multiplicador base
+    0. Identificar operações que variam de acordo com o multiplicador
+      
     1. Inicializar variável para o fator
     2. Inicializar variável para o Consumo Ponta calculado
     3. Inicializar variável para o Consumo Ponta simulado
