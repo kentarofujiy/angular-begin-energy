@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -12,7 +13,8 @@ import { DestinoazulComponent } from  './destinoazul/destinoazul.component';
 import { StudentdetailsComponent } from './studentdetails/studentdetails.component';
 import { DynamicFormQuestionComponent } from './shared/dynamic-form-question.component';
 import { Ng5SliderModule } from 'ng5-slider';
-import { ChartsModule } from 'ng2-charts'
+import { ChartsModule } from 'ng2-charts';
+import { OrigemVerdeGetHistoryService } from './shared/origem-verde-get-history.service'
 
 
 
@@ -23,6 +25,7 @@ import { ChartsModule } from 'ng2-charts'
       ReactiveFormsModule,
       Ng5SliderModule,
       ChartsModule,
+      HttpClientModule,
        RouterModule.forRoot(
       [
     {
@@ -64,6 +67,7 @@ import { ChartsModule } from 'ng2-charts'
     ],
   bootstrap:[ 
     AppComponent
-  ]
+  ],
+  providers: [OrigemVerdeGetHistoryService]
 })
 export class AppModule { }

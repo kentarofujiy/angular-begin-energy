@@ -6,6 +6,7 @@ import { ChartOptions, ChartType, ChartDataSets } from 'chartjs';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { Label } from 'ng2-charts';
 import { Router } from '@angular/router';
+import { OrigemVerdeGetHistoryService } from '../shared/origem-verde-get-history.service';
 
 @Component({
   selector: 'app-simulacao-azul',
@@ -271,54 +272,76 @@ export class SimulacaoAzulComponent implements OnInit {
 
   /////////////////////////// FIM INICIALIZACAO DAS VARIAVEIS ////////////////////////////////////
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+  constructor(
+    public router: Router,
+    private verdehistory: OrigemVerdeGetHistoryService,
+
+  ) { }
+
+  ngOnInit() {
+    this.getHistorico();
+    this.getTarifaOrigem();
+    this.calcToleranciaPonta();
+    this.calcToleranciaForaPonta();
+    this.setUltrapassagemDemanda();
+    this.calcOrigem();
+
+  }
+  
+  
   /////////////////////////// FUNCOES ////////////////////////////////////
+
+
  getHistorico() {
         // geral
-        this.histPriceTotalFatura = 1;
+        this.histPriceTotalFatura =   30666.18 ;
+        this.histKwhDemandaContratadaPonta = 130;
+        this.histKwhDemandaContratadaForaPonta = 0;
         // op1
-        this.histKwhConsumoPontaTusd = 1;
-        this.histTarPriceConsumoPontaTusd = 1;
-        this.histPriceConsumoPontaTusd = 1;
+        this.histKwhConsumoPontaTusd = 1778.596;
+        this.histTarPriceConsumoPontaTusd = 1.0956842;
+        this.histPriceConsumoPontaTusd = 0;
         this.op1 = math.multiply(this.histTarPriceConsumoPontaTusd, this.histKwhConsumoPontaTusd) 
         if (math.equal(this.op1, this.histPriceConsumoPontaTusd))
           console.log("gethist-op1 ok");
         else
           console.log("getdist-op1 error");
         // op2
-        this.histKwhConsumoForaPontaTusd = 1;
-        this.histTarPriceConsumoForaPontaTusd = 1;
-        this.histPriceConsumoForaPontaTusd = 1;
+        this.histKwhConsumoForaPontaTusd = 54357.50;
+        this.histTarPriceConsumoForaPontaTusd = 0.0826473;
+        this.histPriceConsumoForaPontaTusd = 0;
         // op3
-        this.histKwhConsumoPontaTe = 1;
-        this.histTarPriceConsumoPontaTe = 1;
-        this.histPriceConsumoPontaTe = 1;
+        this.histKwhConsumoPontaTe = 1778.596;
+        this.histTarPriceConsumoPontaTe = 0.4736207;
+        this.histPriceConsumoPontaTe = 0;
         // op4
-        this.histKwhConsumoForaPontaTe = 1;
-        this.histTarPriceConsumoForaPontaTe = 1;
-        this.histPriceConsumoForaPontaTe = 1;
+        this.histKwhConsumoForaPontaTe = 54357.50;
+        this.histTarPriceConsumoForaPontaTe = 0.2874082;
+        this.histPriceConsumoForaPontaTe = 0;
         // op5
-        this.histKwhConsumoReativoExcedentePonta = 1;
-        this.histTarConsumoReativoExcedentePonta = 1;
-        this.histPriceConsumoReativoExcedentePonta = 1;
+        this.histKwhConsumoReativoExcedentePonta = 338;
+        this.histTarConsumoReativoExcedentePonta = 0.3029261;
+        this.histPriceConsumoReativoExcedentePonta = 0;
         // op6
-        this.histKwhConsumoReativoExcedenteForaPonta = 1;
-        this.histTarConsumoReativoExcedenteForaPonta = 1;
-        this.histPriceConsumoReativoExcedenteForaPonta = 1;
+        this.histKwhConsumoReativoExcedenteForaPonta = 7486.16;
+        this.histTarConsumoReativoExcedenteForaPonta = 0.3029202;
+        this.histPriceConsumoReativoExcedenteForaPonta = 0;
         //op7
-        this.histPriceAdicionalBandeirasPonta = 1;
+        this.histPriceAdicionalBandeirasPonta = 35.10;
         //op8
-        this.histPriceAdicionalBandeirasForaPonta = 1;
+        this.histPriceAdicionalBandeirasForaPonta =  1444.49;
         //op9
-        this.histKwhDemandaReativaExcedenteForaPontaTusd = 1;
+        this.histKwhDemandaReativaExcedenteForaPontaTusd = 18.24;
         this.histTarDemandaReativaExcedenteForaPontaTusd = 19.5772335;
-        this.histPriceDemandaReativaExcedenteForaPontaTusd = 1;
+        this.histPriceDemandaReativaExcedenteForaPontaTusd = 0;
         //op10
         this.histKwhDemandaRegistradaKwPontaTusd = 0;
         this.histTarDemandaRegistradaKwPontaTusd = 0;
         this.histPriceDemandaRegistradaKwPontaTusd = 0;
         //op11
-        this.histKwhDemandaRegistradaKwForaPontaTusd = 0;
-        this.histTarDemandaRegistradaKwForaPontaTusd = 0;
+        this.histKwhDemandaRegistradaKwForaPontaTusd = 146.60;
+        this.histTarDemandaRegistradaKwForaPontaTusd = 19,5773313;
         this.histPriceDemandaRegistradaKwForaPontaTusd = 0;
         //op12
         this.histKwhDemandaNaoUtilizadaPonta = 0;
@@ -333,37 +356,37 @@ export class SimulacaoAzulComponent implements OnInit {
         this.histTarUltrapassagemDemandaPonta = 0;
         this.histPriceUltrapassagemDemandaPonta = 0;
         //op15
-        this.histKwhUltrapassagemDemandaForaPonta = 0;
-        this.histTarUltrapassagemDemandaForaPonta = 0;
+        this.histKwhUltrapassagemDemandaForaPonta = 16.60;
+        this.histTarUltrapassagemDemandaForaPonta = 39.1544295;
         this.histPriceUltrapassagemDemandaForaPonta = 0;
         //op16
-        this.histPriceOutros = 0;
+        this.histPriceOutros = 31.90;
       }
 
       // busca tarifas
      getTarifaOrigem() {
         //op1
-        this.tarOrigemPontaTusd = 1;
+        this.tarOrigemPontaTusd = 1.0956842;
         //op2
-        this.tarOrigemForaPontaTusd = 1;
+        this.tarOrigemForaPontaTusd = 0.0826473;
         //op3
-        this.tarOrigemPontaTe = 1;
+        this.tarOrigemPontaTe = 0.4736207;
         //op4
-        this.tarOrigemForaPontaTe = 1;
+        this.tarOrigemForaPontaTe = 0.2874082;
         //op5
-        this.tarOrigemConsumoReativoExcedentePonta = this.tarOrigemPontaTe;
+        this.tarOrigemConsumoReativoExcedentePonta = 0.3029261;
         //op6
-        this.tarOrigemConsumoReativoExcedenteForaPonta = this.tarOrigemForaPontaTe;
+        this.tarOrigemConsumoReativoExcedenteForaPonta = 0.3029202;
         //op7
         // Acidional bandeiras Ponta valor no histórico
         //op8
         // Acidional bandeiras Fora Ponta valor no histórico
         //op9
-        this.tarOrigemDemandaReativaExcedenteForaPontaTusd = 1;
+        this.tarOrigemDemandaReativaExcedenteForaPontaTusd = 19.5772335;
         //op10
         this.tarOrigemDemandaRegistradaKwPontaTusd = 0;
         //op11
-        this.tarOrigemDemandaRegistradaKwForaPontaTusd = 1;
+        this.tarOrigemDemandaRegistradaKwForaPontaTusd = 19.5773313;
         //op12
         this.tarOrigemDemandaNaoUtilizadaPonta = 0;
         //op13
@@ -371,7 +394,7 @@ export class SimulacaoAzulComponent implements OnInit {
         //op14
         this.tarOrigemUltrapassagemDemandaPonta = 0;
         //op15
-        this.tarOrigemUltrapassagemDemandaForaPonta = 0;
+        this.tarOrigemUltrapassagemDemandaForaPonta = 39.1544295;
         //op16
         // outros tao tem tarifa
        }
@@ -915,12 +938,5 @@ export class SimulacaoAzulComponent implements OnInit {
   #######################################################################################
   */
 
-  constructor(
-    public router: Router,
-
-  ) { }
-
-  ngOnInit() {
-  }
 
 }
