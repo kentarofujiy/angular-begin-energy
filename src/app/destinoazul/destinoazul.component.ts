@@ -23,6 +23,11 @@ export class DestinoazulComponent implements OnInit {
   public barChartOptions: ChartOptions = {
     responsive: true,
 };
+
+
+sayHello() {
+  console.log("HELLO");
+}
   public barChartLabels: Label[] = ['Comparação Valor da Fatura'];
   public barChartType: ChartType = 'bar';
   public barChartLegend = true;
@@ -163,6 +168,7 @@ export class DestinoazulComponent implements OnInit {
        ) { }
  
   ngOnInit() {
+    this.sayHello();
         this.form = this.qcs.toFormGroup(this.questions);
 
     // inicializar valores
