@@ -230,7 +230,7 @@ export class SimulacaoAzulComponent implements OnInit {
       //op14
       tarDestinoUltrapassagemDemandaPonta: any = 0;
       //op15
-      tarDestinoUltapassagemDemandaForaPonta: any = 0;
+      tarDestinoUltrapassagemDemandaForaPonta: any = 0;
       //op16
       // outros nao tem tarifa
   /*  4. Variaveis resultado origem */
@@ -286,12 +286,15 @@ export class SimulacaoAzulComponent implements OnInit {
     this.calcToleranciaForaPonta();
     this.setUltrapassagemDemanda();
     this.calcOrigem();
-
+    // destino
+    this.getTarifaDestino();
+    this.calcKwhDestinoPontaTusd();
+    this.calcDestino();
   }
   
   
   /////////////////////////// FUNCOES ////////////////////////////////////
-
+  // funcoes historico e origem verde 
 
  getHistorico() {
         // geral
@@ -370,7 +373,7 @@ export class SimulacaoAzulComponent implements OnInit {
         //op2
         this.tarOrigemForaPontaTusd = 0.0826473;
         //op3
-        this.tarOrigemPontaTe = 0.4736207;
+        this.tarOrigemPontaTe = 0.47362066;
         //op4
         this.tarOrigemForaPontaTe = 0.2874082;
         //op5
@@ -488,6 +491,145 @@ export class SimulacaoAzulComponent implements OnInit {
         ) 
         return this.resPriceOrigemTotal
       }
+  // fim historico e origem verde
+
+  // inicio destino azul
+  getTarifaDestino() {
+        //op1
+        this.tarDestinoPontaTusd = 0.082647415469211;
+        //op2
+        this.tarDestinoForaPontaTusd = 0.0826473;
+        //op3
+        this.tarDestinoPontaTe = 0.4736207;
+        //op4
+        this.tarDestinoForaPontaTe = 0.2874082;
+        //op5
+        this.tarDestinoConsumoReativoExcedentePonta = 0.3029261;
+        //op6
+        this.tarDestinoConsumoReativoExcedenteForaPonta = 0.3029202;
+        //op7
+        // Acidional bandeiras Ponta valor no histórico
+        //op8
+        // Acidional bandeiras Fora Ponta valor no histórico
+        //op9
+        this.tarDestinoDemandaReativaExcedenteForaPontaTusd = 19.5772335;
+        //op10
+        this.tarDestinoDemandaRegistradaKwPontaTusd = 0;
+        //op11
+        this.tarDestinoDemandaRegistradaKwForaPontaTusd = 19.5773313;
+        //op12
+        this.tarDestinoDemandaNaoUtilizadaPonta = 0;
+        //op13
+        this.tarDestinoDemandaNaoUtilizadaForaPonta = 0;
+        //op14
+        this.tarDestinoUltrapassagemDemandaPonta = 0;
+        //op15
+        this.tarDestinoUltrapassagemDemandaForaPonta = 39.1544295;
+        //op16
+        // outros tao tem tarifa
+       }
+
+  calcKwhDestinoPontaTusd() {
+    // usar um valor percentual e obter tal percentuagem do valor do historico de consumo fora ponta
+    // no caso 20 é um valor arbitrário
+    // multiplicar por 3(ref: horas) depois por 20 (ref: dias)
+    // usar esse kwh calculado e  usar como kwh do consumo ponta tusdo
+    // multiplicar os 3 valores que variam no origem verde destino azul
+    // 1. resPriceDestinoConsumoPontaTusd
+    // 2. resPriceDestinoConsumoPontaTe
+    // 3. resPriceDestinoDemandaRegistradaKwPontaTusd
+    this.resHelperPercentualDestinoBase = 20;    
+    this.resHelperKwhPercentualForaPonta =
+    math.chain(this.histKwhDemandaRegistradaKwForaPontaTusd)
+      .divide(100)
+      .multiply(this.resHelperPercentualDestinoBase)
+      .done()
+    this.resDestinoKwhPontaTusd = 
+    math.chain(this.resHelperKwhPercentualForaPonta)
+      .multiply(3)
+      .multiply(20)
+      .done() 
+  this.resPriceDestinoConsumoPontaTusd =  
+  math.multiply(this.resDestinoKwhPontaTusd, this.tarDestinoPontaTusd);
+
+  this.resPriceDestinoConsumoPontaTe =
+  math.multiply(this.resDestinoKwhPontaTusd, this.tarDestinoPontaTe);
+
+  this.resPriceDestinoDemandaRegistradaKwPontaTusd =
+  math.multiply(this.resHelperKwhPercentualForaPonta, this.tarOrigemDemandaRegistradaKwPontaTusd);
+  }
+
+    calcDestino() {
+        //op1 calculado com percentual
+        //this.resPriceDestinoConsumoPontaTusd = 
+        //math.multiply(this.histKwhConsumoPontaTusd, this.tarDestinoPontaTusd);
+        //op2
+        this.resPriceDestinoConsumoForaPontaTusd =
+        math.multiply(this.histKwhConsumoForaPontaTusd, this.tarDestinoForaPontaTusd);
+        //op3 calculado com percentual 
+        //this.resPriceDestinoConsumoPontaTe = 
+        // math.multiply(this.histKwhConsumoPontaTe, this.tarDestinoPontaTe);
+        //op4 
+        this.resPriceDestinoConsumoForaPontaTe = 
+        math.multiply(this.histKwhConsumoForaPontaTe, this.tarDestinoForaPontaTe);
+        //op5
+        this.resPriceDestinoConsumoReativoExcedentePonta = 
+        math.multiply(this.histKwhConsumoReativoExcedentePonta, this.tarDestinoConsumoReativoExcedentePonta);
+        //op6
+        this.resPriceDestinoConsumoReativoExcedenteForaPonta = 
+        math.multiply(this.histKwhConsumoReativoExcedenteForaPonta, this.tarDestinoConsumoReativoExcedenteForaPonta);
+        //op7
+        this.resPriceDestinoAdicionalBandeirasPonta = this.histPriceAdicionalBandeirasPonta;
+        //op8
+        this.resPriceDestinoAdicionalBandeirasForaPonta = this.histPriceAdicionalBandeirasForaPonta;
+        //op9 
+        this.resPriceDestinoDemandaReativaExcedenteForaPontaTusd =
+        math.multiply(this.histKwhDemandaReativaExcedenteForaPontaTusd, this.tarDestinoDemandaReativaExcedenteForaPontaTusd);
+        //op10 calculado com percentual
+        //this.resPriceDestinoDemandaRegistradaKwPontaTusd =
+        //math.multiply(this.histKwhDemandaRegistradaKwPontaTusd, this.tarDestinoDemandaRegistradaKwPontaTusd);
+        //op11
+        this.resPriceDestinoDemandaRegistradaKwForaPontaTusd =
+        math.multiply(this.histKwhDemandaRegistradaKwForaPontaTusd, this.tarDestinoDemandaRegistradaKwForaPontaTusd);
+        //op12 (caso o cliente tenha um contrato esse é o Kw do contrato - a demanda registrada, a tarifa é zero, o resultado deve ser zero)
+        this.resPriceDestinoDemandaNaoUtilizadaPonta =
+        math.multiply(this.histKwhDemandaNaoUtilizadaPonta, this.tarDestinoDemandaNaoUtilizadaPonta);
+        //op13
+        this.resPriceDestinoDemandaNaoUtilizadaForaPonta =
+        math.multiply(this.histKwhDemandaNaoUtilizadaForaPonta, this.tarDestinoDemandaNaoUtilizadaForaPonta);
+        //op14
+        this.resPriceDestinoUltrapassagemDemandaPonta =
+        math.multiply(this.resKwhUltrapassagemDemandaPagarPonta, this.tarDestinoUltrapassagemDemandaPonta);
+        //op15
+        this.resPriceDestinoUltrapassagemDemandaForaPonta =
+        math.multiply(this.resKwhUltrapassagemDemandaPagarForaPonta, this.tarDestinoUltrapassagemDemandaForaPonta);
+        //op16
+        this.resPriceDestinoOutros = this.histPriceOutros;
+
+        // total
+        this.resPriceDestinoTotal =
+        math.sum(
+           this.resPriceDestinoConsumoPontaTusd,                                     //op1
+           this.resPriceDestinoConsumoForaPontaTusd,                                 //op2
+           this.resPriceDestinoConsumoPontaTe,                                       //op3
+           this.resPriceDestinoConsumoForaPontaTe,                                   //op4
+           this.resPriceDestinoConsumoReativoExcedentePonta,                         //op5
+           this.resPriceDestinoConsumoReativoExcedenteForaPonta,                     //op6
+           this.resPriceDestinoAdicionalBandeirasPonta,                              //op7
+           this.resPriceDestinoAdicionalBandeirasForaPonta,                          //op8
+           this.resPriceDestinoDemandaReativaExcedenteForaPontaTusd,                 //op9
+           this.resPriceDestinoDemandaRegistradaKwPontaTusd,                         //op10
+           this.resPriceDestinoDemandaRegistradaKwForaPontaTusd,                     //op11
+           this.resPriceDestinoDemandaNaoUtilizadaPonta,                             //op12
+           this.resPriceDestinoDemandaNaoUtilizadaForaPonta,                         //op13
+           this.resPriceDestinoUltrapassagemDemandaPonta,                            //op14
+           this.resPriceDestinoUltrapassagemDemandaForaPonta,                        //op15
+           this.resPriceDestinoOutros                                                //op16
+        ) 
+        return this.resPriceDestinoTotal
+      }
+
+  // fim destino azul
 
     /////////////////////////// FIM FUNCOES ////////////////////////////////////
   /*
@@ -591,35 +733,7 @@ export class SimulacaoAzulComponent implements OnInit {
     3. Inicializar variável para o Consumo Ponta simulado
     
     4. Inicializar variável para o valor máximo do multiplicador
-    calcKwhDestinoPontaTusd() {
-    // usar um valor percentual e obter tal percentuagem do valor do historico de consumo fora ponta
-    // no caso 20 é um valor arbitrário
-    // multiplicar por 3(ref: horas) depois por 20 (ref: dias)
-    // usar esse kwh calculado e  usar como kwh do consumo ponta tusdo
-    // multiplicar os 3 valores que variam no origem verde destino azul
-    // 1. resPriceDestinoConsumoPontaTusd
-    // 2. resPriceDestinoConsumoPontaTe
-    // 3. resPriceDestinoDemandaRegistradaKwPontaTusd
-    this.resHelperPercentualDestinoBase = 20;    
-    this.resHelperKwhPercentualForaPonta =
-    math.chain(this.histKwhConsumoForaPontaTusd)
-      .divide(100)
-      .multiply(this.resHelperPercentualDestinoBase)
-      .done()
-    this.resDestinoKwhPontaTusd = 
-    math.chain(this.resHelperKwhPercentualForaPonta)
-      .multiply(3)
-      .multiply(20)
-      .done() 
-  this.resPriceDestinoConsumoPontaTusd =  
-  math.multiply(this.resDestinoKwhPontaTusd, this.tarDestinoPontaTusd);
-
-  this.resPriceDestinoConsumoPontaTe =
-  math.multiply(this.resDestinoKwhPontaTusd, this.tarDestinoPontaTe);
-
-  this.resPriceDestinoDemandaRegistradaKwPontaTusd =
-  math.multiply(this.resHelperKwhPercentualForaPonta, this.tarOrigemDemandaRegistradaKwPontaTusd);
-  }
+    
    #7# Cálculo destino base
         5.1. Inicializar variaveis a serem calculadas
         //ok
@@ -627,75 +741,7 @@ export class SimulacaoAzulComponent implements OnInit {
         //ok
         5.3  Função calculo base
         // retirar as 3 variaveis
-         calcDestino() {
-        //op1 calculado com percentual
-        //this.resPriceDestinoConsumoPontaTusd = 
-        //math.multiply(this.histKwhConsumoPontaTusd, this.tarDestinoPontaTusd);
-        //op2
-        this.resPriceDestinoTotal =
-        math.multiply(this.histKwhConsumoForaPontaTusd, this.tarDestinoForaPontaTusd);
-        //op3 calculado com percentual 
-        //this.resPriceDestinoConsumoPontaTe = 
-        // math.multiply(this.histKwhConsumoPontaTe, this.tarDestinoPontaTe);
-        //op4 
-        this.resPriceDestinoConsumoForaPontaTe = 
-        math.multiply(this.histKwhConsumoForaPontaTe, this.tarDestinoForaPontaTe);
-        //op5
-        this.resPriceDestinoConsumoReativoExcedentePonta = 
-        math.multiply(this.histKwhConsumoReativoExedentePonta, this.tarDestinoExcedentePonta);
-        //op6
-        this.resPriceDestinoConsumoExcedenteForaPontaTe = 
-        math.multiply(this.histKwhConsumoReativoExedenteForaPonta, this.tarDestinoConsumoReativoExcedenteForaPonta);
-        //op7
-        this.resPriceDestinoAdicionalBandeirasPonta = this.histPriceAdicionalBandeirasPonta;
-        //op8
-        this.resPriceDestinoAdicionalBandeirasForaPonta = this.histPriceAdicionalBandeirasForaPonta;
-        //op9 
-        this.resPriceDestinoDemandaReativaExcedenteForaPontaTusd =
-        math.multiply(this.histKwhDemandaReativaExcedenteForaPontaTusd, this.tarDestinoDemandaReativaExcedenteForaPontaTusd);
-        //op10 calculado com percentual
-        //this.resPriceDestinoDemandaRegistradaKwPontaTusd =
-        //math.multiply(this.histKwhDemandaRegistradaKwPontaTusd, this.tarDestinoDemandaRegistradaKwPontaTusd);
-        //op11
-        this.resPriceDestinoDemandaRegistradaKwForaPontaTusd =
-        math.multiply(this.histKwhDemandaRegistradaKwForaPontaTusd, this.tarDestinoDemandaRegistradaKwForaPontaTusd);
-        //op12 (caso o cliente tenha um contrato esse é o Kw do contrato - a demanda registrada, a tarifa é zero, o resultado deve ser zero)
-        this.resPriceDestinoDemandaNaoUtilizadaPonta =
-        math.multiply(this.histKwhDemandaNaoUtilizadaPonta, this.tarDestinoDemandaNaoUtilizadaPonta);
-        //op13
-        this.resPriceDestinoDemandaNaoUtilizadaForaPonta =
-        math.multiply(this.histKwhDemandaNaoUtilizadaForaPonta, this.tarDestinoDemandaNaoUtilizadaForaPonta);
-        //op14
-        this.resPriceDestinoUltrapassagemDemandaPonta =
-        math.multiply(this.resKwhUltrapassagemDemandaPagarPonta, this.tarDestinoUltrapassagemDemandaPonta);
-        //op15
-        this.resPriceDestinoUltrapassagemDemandaForaPonta =
-        math.multiply(this.resKwhUltrapassagemDemandaPagarForaPonta, this.tarDestinoUltrapassagemDemandaForaPonta);
-        //op16
-        this.resPriceDestinoOutros = this.histPriceOutros;
-
-        // total
-        this.resPriceDestinoTotal =
-        math.sum(
-           this.resPriceDestinoConsumoPontaTusd,                                     //op1
-           this.resPriceDestinoConsumoForaPontaTusd,                                 //op2
-           this.resPriceDestinoConsumoPontaTe,                                       //op3
-           this.resPriceDestinoConsumoForaPontaTe,                                   //op4
-           this.resPriceDestinoConsumoReativoExcedentePonta,                         //op5
-           this.resPriceDestinoConsumoReativoExcedenteForaPonta,                     //op6
-           this.resPriceDestinoAdicionalBandeirasPonta,                              //op7
-           this.resPriceDestinoAdicionalBandeirasForaPonta,                          //op8
-           this.resPriceDestinoDemandaReativaExcedenteForaPontaTusd,                 //op9
-           this.resPriceDestinoDemandaRegistradaKwPontaTusd,                         //op10
-           this.resPriceDestinoDemandaRegistradaKwForaPontaTusd,                     //op11
-           this.resPriceDestinoDemandaNaoUtilizadaPonta,                             //op12
-           this.resPriceDestinoDemandaNaoUtilizadaForaPonta,                         //op13
-           this.resPriceDestinoUltrapassagemDemandaPonta,                            //op14
-           this.resPriceDestinoUltrapassagemDemandaForaPonta,                        //op15
-           this.resPriceDestinoOutros                                                //op16
-        ) 
-        return resPriceDestinoTotal
-      }
+       
         5.4  Chamar snapshot
   #8# Calcular disponibilidade energética nesse caso
     1. Inicializar variável para a disponibilidade energética origiem
