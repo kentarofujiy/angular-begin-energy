@@ -1,258 +1,247 @@
 <div class="container">
-<div style="display: block;">
-  <canvas baseChart 
-    [datasets]="barChartData"
-    [labels]="barChartLabels"
-    [options]="barChartOptions"
-    [plugins]="barChartPlugins"
-    [legend]="barChartLegend"
-    [chartType]="barChartType">
-  </canvas> 
-</div>
-<div class="row">
-<div class="card col-md-4 col-xs-12">
-  <div class="card-header">
-	<h5 class="card-title">Simular percentual Ponta</h5>
-</div>
-<div class="card-body">
-  <h5>Percentual:</h5>
-  <p>{{resHelperPercentualSimulacaoSlider}}</p>
-  <br>
-  <input [(ngModel)]="resHelperPercentualSimulacaoSlider"  type="range" #slider min="10" max="100" value="0" [value]="0"  class="slider" >
-  <br>
-  <button class="btn btn-primary" (click)="sliderSimulation()">Simular</button>
-  </div>
-</div>
-<table class="table col-md-8 col-xs-12">
-	<thead>
-		<tr>
-			<th>Origem</th>
-			<th>Destino</th>
-			<th>Simulação</th>
-		</tr>
-	</thead>
-  <tr>
-	<td>{{ histPriceTotalFatura }}</td>
-	<td>{{ resPriceDestinoTotal }}</td>
-	<td>{{ resPriceSimulacaoTotal }}</td>
-</tr>
-</table>
-</div>
-<div class="flex">
-  <div class="flex-item">
-    <div style="display: block;">
-    <canvas baseChart width="400" height="400"
-                [datasets]="lineChartData"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptions"
-                [colors]="lineChartColors"
-                [legend]="lineChartLegend"
-                [chartType]="lineChartType"
-                [plugins]="lineChartPlugins"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)"></canvas>
-    </div>
-  </div>
-</div>
+	<div style="display: block;">
+		<canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+			[plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+		</canvas>
+	</div>
+	<div class="row">
+		<div class="card col-md-4 col-xs-12">
+			<div class="card-header">
+				<h5 class="card-title">Simular percentual Ponta</h5>
+			</div>
+			<div class="card-body">
+				<h5>Percentual:</h5>
+				<p>{{resHelperPercentualSimulacaoSlider}}</p>
+				<br>
+				<input [(ngModel)]="resHelperPercentualSimulacaoSlider"  type="range" #slider min="10" max="100" value="0" [value]="0"  class="slider" >
+				<br>
+				<button class="btn btn-primary" (click)="sliderSimulation()">Simular</button>
+			</div>
+		</div>
+		<table class="table col-md-8 col-xs-12">
+			<thead>
+				<tr>
+					<th>Origem</th>
+					<th>Destino</th>
+					<th>Simulação</th>
+				</tr>
+			</thead>
+			<tr>
+				<td>{{ histPriceTotalFatura }}</td>
+				<td>{{ resPriceDestinoTotal }}</td>
+				<td>{{ resPriceSimulacaoTotal }}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="flex">
+		<div class="flex-item">
+			<div style="display: block;">
+				<canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels"
+					[options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend"
+					[chartType]="lineChartType" [plugins]="lineChartPlugins" (chartHover)="chartHovered($event)"
+					(chartClick)="chartClicked($event)"></canvas>
+			</div>
+		</div>
+	</div>
 
-<div class="table-responsive">
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">variável</th>
-<th scope="col"> histKwh</th> 
-<th scope="col"> hisTarOri</th>
-<th scope="col"> histPrice</th> 
-<th scope="col"> tarPriceOrigem</th>  
-<th scope="col">  resPriceOrigem</th> 
-<th scope="col">  tarPriceDestino</th> 
-<th scope="col"> resPriceDestino</th> 
-<!-- <th scope="col">  histKwhSim 
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">variável</th>
+					<th scope="col"> Histórico Kw/h</th>
+					<th scope="col"> Tarifa Origem</th>
+					<th scope="col"> Valor na Fatura</th>
+					<th scope="col"> Tarifa Origem</th>
+					<th scope="col"> Valor na Origem</th>
+					<th scope="col"> Tarifa Destino</th>
+					<th scope="col"> Valor no Destino</th>
+					<!-- <th scope="col">  histKwhSim 
 <th scope="col"> tarPriceSim  
 <th scope="col">   fatorKwhSim 
 <th scope="col">   fatorPriceSim -->
-<th scope="col"> resPriceSim  
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1.1 Consumo Ponta tusd </th>
-    <td>1.2 {{ histKwhConsumoPontaTusd }} </td>
-    <td>1.3 {{ histTarConsumoPontaTusd }} </td>
-    <td>1.4 {{ histPriceConsumoPontaTusd }} </td>
-    <td>1.5 {{ tarOrigemPontaTusd }} </td>
-    <td>1.6 {{ resPriceOrigemConsumoPontaTusd }} </td>
-    <td>1.7 {{ tarDestinoPontaTusd }} </td>
-    <td>1.8 {{ resPriceDestinoConsumoPontaTusd }} </td>
-    <td>1.9 {{ resPriceSimulacaoConsumoPontaTusd }} </td>
-    </tr>
-    <tr>
-      <th scope="row">2.1 Consumo Fora Ponta tusd</th>
-    <td>2.2 {{ histKwhConsumoForaPontaTusd }} </td>
-    <td>2.3 {{ histTarConsumoForaPontaTusd }} </td>
-    <td>2.4 {{ histPriceConsumoForaPontaTusd }} </td>
-    <td>2.5 {{ tarOrigemForaPontaTusd }} </td>
-    <td>2.6 {{ resPriceOrigemConsumoForaPontaTusd }} </td>
-    <td>2.7 {{ tarDestinoForaPontaTusd }} </td>
-    <td>2.8 {{ resPriceDestinoConsumoForaPontaTusd }} </td>
-    <td>2.9 {{ resPriceDestinoConsumoForaPontaTusd }} </td>
-    </tr>
-  <tr>
-      <th scope="row"> 3.1 Consumo Ponta TE</th>
-    <td>3.2 {{ histKwhConsumoPontaTe }} </td>
-    <td>3.3 {{ histTarConsumoPontaTe }} </td>
-    <td>3.4 {{ histPriceConsumoPontaTe }} </td>
-    <td>3.5 {{ tarOrigemPontaTe }} </td>
-    <td>3.6 {{ resPriceOrigemConsumoPontaTe }} </td>
-    <td>3.7 {{ tarDestinoPontaTe }} </td>
-    <td>3.8 {{ resPriceDestinoConsumoPontaTe }} </td>
-    <td>3.9 {{ resPriceSimulacaoConsumoPontaTe }} </td>
-    </tr>
-    <tr>
-      <th scope="row"> 4.1 Consumo Fora Ponta TE</th>
-    <td>4.2 {{ histKwhConsumoForaPontaTe }} </td>
-    <td>4.3 {{ histTarConsumoForaPontaTe }} </td>
-    <td>4.4 {{ histPriceConsumoForaPontaTe }} </td>
-    <td>4.5 {{ tarOrigemForaPontaTe }} </td>
-    <td>4.6 {{ resPriceOrigemConsumoForaPontaTe }} </td>
-    <td>4.7 {{ tarDestinoForaPontaTe }} </td>
-    <td>4.8 {{ resPriceDestinoConsumoForaPontaTe }} </td>
-     <td>4.9 {{ resPriceDestinoConsumoForaPontaTe }} </td>
-    </tr>
+					<th scope="col"> Valor Simulação
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row">Consumo Ponta tusd </th>
+					<td> {{ histKwhConsumoPontaTusd }} </td>
+					<td> {{ histTarConsumoPontaTusd }} </td>
+					<td> {{ histPriceConsumoPontaTusd }} </td>
+					<td> {{ tarOrigemPontaTusd }} </td>
+					<td> {{ resPriceOrigemConsumoPontaTusd }} </td>
+					<td> {{ tarDestinoPontaTusd }} </td>
+					<td> {{ resPriceDestinoConsumoPontaTusd }} </td>
+					<td> {{ resPriceSimulacaoConsumoPontaTusd }} </td>
+				</tr>
+				<tr>
+					<th scope="row">Consumo Fora Ponta tusd</th>
+					<td> {{ histKwhConsumoForaPontaTusd }} </td>
+					<td> {{ histTarConsumoForaPontaTusd }} </td>
+					<td> {{ histPriceConsumoForaPontaTusd }} </td>
+					<td> {{ tarOrigemForaPontaTusd }} </td>
+					<td> {{ resPriceOrigemConsumoForaPontaTusd }} </td>
+					<td> {{ tarDestinoForaPontaTusd }} </td>
+					<td> {{ resPriceDestinoConsumoForaPontaTusd }} </td>
+					<td> {{ resPriceDestinoConsumoForaPontaTusd }} </td>
+				</tr>
+				<tr>
+					<th scope="row"> Consumo Ponta TE</th>
+					<td> {{ histKwhConsumoPontaTe }} </td>
+					<td> {{ histTarConsumoPontaTe }} </td>
+					<td> {{ histPriceConsumoPontaTe }} </td>
+					<td> {{ tarOrigemPontaTe }} </td>
+					<td> {{ resPriceOrigemConsumoPontaTe }} </td>
+					<td> {{ tarDestinoPontaTe }} </td>
+					<td> {{ resPriceDestinoConsumoPontaTe }} </td>
+					<td> {{ resPriceSimulacaoConsumoPontaTe }} </td>
+				</tr>
+				<tr>
+					<th scope="row"> Consumo Fora Ponta TE</th>
+					<td> {{ histKwhConsumoForaPontaTe }} </td>
+					<td> {{ histTarConsumoForaPontaTe }} </td>
+					<td> {{ histPriceConsumoForaPontaTe }} </td>
+					<td> {{ tarOrigemForaPontaTe }} </td>
+					<td> {{ resPriceOrigemConsumoForaPontaTe }} </td>
+					<td> {{ tarDestinoForaPontaTe }} </td>
+					<td> {{ resPriceDestinoConsumoForaPontaTe }} </td>
+					<td> {{ resPriceDestinoConsumoForaPontaTe }} </td>
+				</tr>
 
-    <tr>
-    <th scope="row"> 5.1 Consumo Reativo Exedente Ponta</th>
-    <td>5.2 {{ histKwhConsumoReativoExcedentePonta }}</td>
-    <td>5.3 {{ histTarConsumoReativoExcedentePonta }}</td>
-    <td>5.4 {{ histPriceConsumoReativoExcedentePonta }}</td>
-    <td>5.5 {{ tarOrigemConsumoReativoExcedenteForaPonta }}</td>
-    <td>5.6 {{ resPriceOrigemConsumoReativoExcedentePonta }}</td>
-    <td>5.7 {{ tarDestinoConsumoReativoExcedenteForaPonta }}</td>
-    <td>5.8 {{ resPriceDestinoConsumoReativoExcedentePonta }}</td>
-     <td>5.9 {{ resPriceDestinoConsumoReativoExcedentePonta }}</td>
-    </tr>
-    <tr>
-      <th scope="row">6.1 Consumo Reativo Exedente Fora Ponta</th>
-    <td>6.2 {{ histKwhConsumoReativoExcedenteForaPonta }}</td>
-    <td>6.3 {{ histTarConsumoReativoExcedenteForaPonta }}</td>
-    <td>6.4 {{ histPriceConsumoReativoExcedenteForaPonta }}</td>
-    <td>6.5 {{ tarOrigemConsumoReativoExcedenteForaPonta }}</td>
-    <td>6.6 {{ resPriceOrigemConsumoReativoExcedenteForaPonta }}</td>
-    <td>6.7 {{ tarDestinoConsumoReativoExcedenteForaPonta }}</td>
-    <td>6.8 {{ resPriceDestinoConsumoReativoExcedenteForaPonta }}</td>
-    <td>6.9 {{ resPriceDestinoConsumoReativoExcedenteForaPonta }}</td>
-    </tr>
-    <tr>
-      <th scope="row"> 7.1 Adicional Bandeiras Ponta</th>
-    <td>7.2 'N/D'</td>
-    <td>7.3 'N/D'</td>
-    <td>7.4 {{ histPriceAdicionalBandeirasPonta }}</td>
-    <td>7.5 'N/D'</td>
-    <td>7.6 {{ resPriceOrigemAdicionalBandeirasPonta }}</td>
-    <td>7.7 'N/D'</td>
-    <td>7.8 {{ resPriceDestinoAdicionalBandeirasPonta }}</td>
-    <td>7.9 {{ resPriceDestinoAdicionalBandeirasPonta }}</td>
-    </tr>
-    <tr>
-      <th scope="row"> 8.1 Adicional Bandeiras Fora Ponta</th>
-    <td>8.2 'N/D'</td>
-    <td>8.3 'N/D'</td>
-    <td>8.4 {{ histPriceAdicionalBandeirasForaPonta }}</td>
-    <td>8.5 'N/D'</td>
-    <td>8.6 {{ resPriceOrigemAdicionalBandeirasForaPonta }}</td>
-    <td>8.7 'N/D'</td>
-    <td>8.8 {{ resPriceDestinoAdicionalBandeirasForaPonta }}</td>
-    <td>8.9 {{ resPriceDestinoAdicionalBandeirasForaPonta }}</td>
-    </tr>
-    <tr>
-      <th scope="row">9.1 Demanda Reativa Exedente Fora Ponta TUSD</th>
-    <td>9.2 {{ histKwhDemandaReativaExcedenteForaPontaTusd }}</td>
-    <td>9.3 {{ histTarDemandaReativaExcedenteForaPontaTusd }}</td>
-    <td>9.4 {{ histPriceDemandaReativaExcedenteForaPontaTusd }}</td>
-    <td>9.5 {{ tarOrigemDemandaReativaExcedenteForaPontaTusd }}</td>
-    <td>9.6 {{ resPriceOrigemDemandaReativaExcedenteForaPontaTusd }} </td>
-    <td>9.7 {{ tarDestinoDemandaReativaExcedenteForaPontaTusd }}</td>
-    <td>9.8 {{ resPriceDestinoDemandaReativaExcedenteForaPontaTusd }} </td>
-    <td>9.9 {{ resPriceDestinoDemandaReativaExcedenteForaPontaTusd }} </td>
-    </tr>
-    <tr>
-    <th scope="row">      10.1 Demanda Registrada Ponta TUSD</th>
-    <td>10.2 {{ histKwhDemandaRegistradaKwPontaTusd }}</td>
-    <td>10.3 {{ histTarDemandaRegistradaKwPontaTusd }}</td>
-    <td>10.4 {{ histPriceDemandaRegistradaKwPontaTusd }}</td>
-    <td>10.5 {{ tarOrigemDemandaRegistradaKwPontaTusd }}</td>
-    <td>10.6 {{ resPriceOrigemDemandaRegistradaKwPontaTusd }}</td>
-    <td>10.7 {{ tarDestinoDemandaRegistradaKwPontaTusd }}</td>
-    <td>10.8 {{ resPriceDestinoDemandaRegistradaKwPontaTusd }}</td>
-    <td>10.9 {{ resPriceSimulacaoDemandaRegistradaKwPontaTusd }}</td>
-    </tr>
-    <tr>
-      <th scope="row">      11.1 Demanda Registrada Fora Ponta TUSD</th>
-    <td>11.2 {{ histKwhDemandaRegistradaKwForaPontaTusd }}</td>
-    <td>11.3 {{ histTarDemandaRegistradaKwForaPontaTusd }}</td>
-    <td>11.4 {{ histPriceDemandaRegistradaKwForaPontaTusd }}</td>
-    <td>11.5 {{ tarOrigemDemandaRegistradaKwForaPontaTusd }}</td>
-    <td>11.6 {{ resPriceOrigemDemandaRegistradaForaPontaTusd }}</td>
-    <td>11.7 {{ tarDestinoDemandaRegistradaKwForaPontaTusd }}</td>
-    <td>11.8{{ resPriceDestinoDemandaRegistradaForaPontaTusd }}</td>
-    <td>11.9{{ resPriceDestinoDemandaRegistradaForaPontaTusd }}</td>
-    </tr>
-    <tr>
-      <th scope="row">      12.1 Demanda Não Utilizada Ponta</th>
-    <td>12.2 {{ histKwhDemandaNaoUtilizadaPonta }}</td>
-    <td>12.3 {{ histTarDemandaNaoUtilizadaPonta }}</td>
-    <td>12.4 {{ histPriceDemandaNaoUtilizadaPonta }}</td>
-    <td>12.5 {{ tarOrigemDemandaNaoUtilizadaPonta }}</td>
-    <td>12.6 {{ resPriceOrigemDemandaNaoUtilizadaPonta }}</td>
-    <td>12.7 {{ tarDestinoDemandaNaoUtilizadaPonta }}</td>
-    <td>12.8 {{ resPriceDestinoDemandaNaoUtilizadaPonta }}</td>
-     <td>12.9 {{ resPriceDestinoDemandaNaoUtilizadaPonta }}</td>
-    </tr>
-    <tr>
-      <th scope="row">      13.1 Demanda Não Utilizada Fora Ponta</th>
-    <td>13.2 {{ histKwhDemandaNaoUtilizadaForaPonta }}</td>
-    <td>13.3 {{ histTarDemandaNaoUtilizadaForaPonta }}</td>
-    <td>13.4 {{ histPriceDemandaNaoUtilizadaForaPonta }}</td>
-    <td>13.5 {{ tarOrigemDemandaNaoUtilizadaForaPonta }}</td>
-    <td>13.6 {{ resPriceOrigemDemandaNaoUtilizadaForaPonta }}</td>
-    <td>13.7 {{ tarDestinoDemandaNaoUtilizadaForaPonta }}</td>
-    <td>13.8 {{ resPriceDestinoDemandaNaoUtilizadaForaPonta }}</td>
-    <td>13.9 {{ resPriceDestinoDemandaNaoUtilizadaForaPonta }}</td>
-    </tr>
-    <tr>
-      <th scope="row">      14.1 Ultrapassagem Demanda Contratada Ponta</th>
-    <td>14.2 {{ histKwhUltrapassagemDemandaPonta }}</td>
-    <td>14.3 {{ histTarUltrapassagemDemandaPonta }}</td>
-    <td>14.4 {{ histPriceUltrapassagemDemandaPonta }}</td>
-    <td>14.5 {{ tarOrigemUltrapassagemDemandaPonta }}</td>
-    <td>14.6 {{ resPriceOrigemUltrapassagemDemandaPonta }}</td>
-    <td>14.7 {{ tarDestinoUltrapassagemDemandaPonta }}</td>
-    <td>14.8 {{ resPriceDestinoUltrapassagemDemandaPonta }}</td>
-    <td>14.9 {{ resPriceDestinoUltrapassagemDemandaPonta }}</td>
-    </tr>
-    <tr>
-      <th scope="row"> 15 -- Ultrapassagem Demanda Contratada Fora Ponta</th>
-    <td>1 --  {{ histKwhUltrapassagemDemandaForaPonta }}</td>
-    <td>2 --  {{ histTarUltrapassagemDemandaForaPonta }}</td>
-    <td>3 --  {{ histPriceUltrapassagemDemandaForaPonta }}</td>
-    <td>4 --  {{ tarOrigemUltrapassagemDemandaForaPonta }}</td>
-    <td>6 --  {{ resPriceOrigemUltrapassagemDemandaForaPonta }}</td>
-    <td>7 --  {{ tarDestinoUltrapassagemDemandaForaPonta }}</td>
-    <td>8 --  {{ resPriceOrigemUltrapassagemDemandaForaPonta }}</td>
-    <td>9 --  {{ resPriceOrigemUltrapassagemDemandaForaPonta }}</td>
-    </tr>
-    <tr>
-      <th scope="row">16 -- Outros</th>
-    <td>2 -- 'N/D'</td>
-    <td>3 -- 'N/D'</td>
-    <td>4 -- {{ histPriceOutros }}</td>
-    <td>5 -- 'N/D'</td>
-    <td>6 -- {{ resPriceOrigemOutros }}</td>
-    <td>7 -- 'N/D'</td>
-    <td>8 -- {{ resPriceDestinoOutros }}</td>
-    <td>9 -- {{ resPriceDestinoOutros }}</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+				<tr>
+					<th scope="row"> Consumo Reativo Exedente Ponta</th>
+					<td> {{ histKwhConsumoReativoExcedentePonta }}</td>
+					<td> {{ histTarConsumoReativoExcedentePonta }}</td>
+					<td> {{ histPriceConsumoReativoExcedentePonta }}</td>
+					<td> {{ tarOrigemConsumoReativoExcedenteForaPonta }}</td>
+					<td> {{ resPriceOrigemConsumoReativoExcedentePonta }}</td>
+					<td> {{ tarDestinoConsumoReativoExcedenteForaPonta }}</td>
+					<td> {{ resPriceDestinoConsumoReativoExcedentePonta }}</td>
+					<td> {{ resPriceDestinoConsumoReativoExcedentePonta }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Consumo Reativo Exedente Fora Ponta</th>
+					<td> {{ histKwhConsumoReativoExcedenteForaPonta }}</td>
+					<td> {{ histTarConsumoReativoExcedenteForaPonta }}</td>
+					<td> {{ histPriceConsumoReativoExcedenteForaPonta }}</td>
+					<td> {{ tarOrigemConsumoReativoExcedenteForaPonta }}</td>
+					<td> {{ resPriceOrigemConsumoReativoExcedenteForaPonta }}</td>
+					<td> {{ tarDestinoConsumoReativoExcedenteForaPonta }}</td>
+					<td> {{ resPriceDestinoConsumoReativoExcedenteForaPonta }}</td>
+					<td> {{ resPriceDestinoConsumoReativoExcedenteForaPonta }}</td>
+				</tr>
+				<tr>
+					<th scope="row"> Adicional Bandeiras Ponta</th>
+					<td> 'N/D'</td>
+					<td> 'N/D'</td>
+					<td> {{ histPriceAdicionalBandeirasPonta }}</td>
+					<td> 'N/D'</td>
+					<td> {{ resPriceOrigemAdicionalBandeirasPonta }}</td>
+					<td> 'N/D'</td>
+					<td> {{ resPriceDestinoAdicionalBandeirasPonta }}</td>
+					<td> {{ resPriceDestinoAdicionalBandeirasPonta }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Adicional Bandeiras Fora Ponta</th>
+					<td> 'N/D'</td>
+					<td> 'N/D'</td>
+					<td> {{ histPriceAdicionalBandeirasForaPonta }}</td>
+					<td> 'N/D'</td>
+					<td> {{ resPriceOrigemAdicionalBandeirasForaPonta }}</td>
+					<td> 'N/D'</td>
+					<td> {{ resPriceDestinoAdicionalBandeirasForaPonta }}</td>
+					<td> {{ resPriceDestinoAdicionalBandeirasForaPonta }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Demanda Reativa Exedente Fora Ponta TUSD</th>
+					<td>{{ histKwhDemandaReativaExcedenteForaPontaTusd }}</td>
+					<td>{{ histTarDemandaReativaExcedenteForaPontaTusd }}</td>
+					<td>{{ histPriceDemandaReativaExcedenteForaPontaTusd }}</td>
+					<td>{{ tarOrigemDemandaReativaExcedenteForaPontaTusd }}</td>
+					<td>{{ resPriceOrigemDemandaReativaExcedenteForaPontaTusd }} </td>
+					<td>{{ tarDestinoDemandaReativaExcedenteForaPontaTusd }}</td>
+					<td>{{ resPriceDestinoDemandaReativaExcedenteForaPontaTusd }} </td>
+					<td>{{ resPriceDestinoDemandaReativaExcedenteForaPontaTusd }} </td>
+				</tr>
+				<tr>
+					<th scope="row">Demanda Registrada Ponta TUSD</th>
+					<td> {{ histKwhDemandaRegistradaKwPontaTusd }}</td>
+					<td> {{ histTarDemandaRegistradaKwPontaTusd }}</td>
+					<td> {{ histPriceDemandaRegistradaKwPontaTusd }}</td>
+					<td> {{ tarOrigemDemandaRegistradaKwPontaTusd }}</td>
+					<td> {{ resPriceOrigemDemandaRegistradaKwPontaTusd }}</td>
+					<td> {{ tarDestinoDemandaRegistradaKwPontaTusd }}</td>
+					<td> {{ resPriceDestinoDemandaRegistradaKwPontaTusd }}</td>
+					<td> {{ resPriceSimulacaoDemandaRegistradaKwPontaTusd }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Demanda Registrada Fora Ponta TUSD</th>
+					<td>{{ histKwhDemandaRegistradaKwForaPontaTusd }}</td>
+					<td>{{ histTarDemandaRegistradaKwForaPontaTusd }}</td>
+					<td>{{ histPriceDemandaRegistradaKwForaPontaTusd }}</td>
+					<td>{{ tarOrigemDemandaRegistradaKwForaPontaTusd }}</td>
+					<td>{{ resPriceOrigemDemandaRegistradaForaPontaTusd }}</td>
+					<td>{{ tarDestinoDemandaRegistradaKwForaPontaTusd }}</td>
+					<td>{{ resPriceDestinoDemandaRegistradaForaPontaTusd }}</td>
+					<td>{{ resPriceDestinoDemandaRegistradaForaPontaTusd }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Demanda Não Utilizada Ponta</th>
+					<td>12.2 {{ histKwhDemandaNaoUtilizadaPonta }}</td>
+					<td>12.3 {{ histTarDemandaNaoUtilizadaPonta }}</td>
+					<td>12.4 {{ histPriceDemandaNaoUtilizadaPonta }}</td>
+					<td>12.5 {{ tarOrigemDemandaNaoUtilizadaPonta }}</td>
+					<td>12.6 {{ resPriceOrigemDemandaNaoUtilizadaPonta }}</td>
+					<td>12.7 {{ tarDestinoDemandaNaoUtilizadaPonta }}</td>
+					<td>12.8 {{ resPriceDestinoDemandaNaoUtilizadaPonta }}</td>
+					<td>12.9 {{ resPriceDestinoDemandaNaoUtilizadaPonta }}</td>
+				</tr>
+				<tr>
+					<th scope="row"> Demanda Não Utilizada Fora Ponta</th>
+					<td> {{ histKwhDemandaNaoUtilizadaForaPonta }}</td>
+					<td> {{ histTarDemandaNaoUtilizadaForaPonta }}</td>
+					<td> {{ histPriceDemandaNaoUtilizadaForaPonta }}</td>
+					<td> {{ tarOrigemDemandaNaoUtilizadaForaPonta }}</td>
+					<td> {{ resPriceOrigemDemandaNaoUtilizadaForaPonta }}</td>
+					<td> {{ tarDestinoDemandaNaoUtilizadaForaPonta }}</td>
+					<td> {{ resPriceDestinoDemandaNaoUtilizadaForaPonta }}</td>
+					<td> {{ resPriceDestinoDemandaNaoUtilizadaForaPonta }}</td>
+				</tr>
+				<tr>
+					<th scope="row"> Ultrapassagem Demanda Contratada Ponta</th>
+					<td> {{ histKwhUltrapassagemDemandaPonta }}</td>
+					<td> {{ histTarUltrapassagemDemandaPonta }}</td>
+					<td> {{ histPriceUltrapassagemDemandaPonta }}</td>
+					<td> {{ tarOrigemUltrapassagemDemandaPonta }}</td>
+					<td> {{ resPriceOrigemUltrapassagemDemandaPonta }}</td>
+					<td> {{ tarDestinoUltrapassagemDemandaPonta }}</td>
+					<td> {{ resPriceDestinoUltrapassagemDemandaPonta }}</td>
+					<td> {{ resPriceDestinoUltrapassagemDemandaPonta }}</td>
+				</tr>
+				<tr>
+					<th scope="row"> Ultrapassagem Demanda Contratada Fora Ponta</th>
+					<td> {{ histKwhUltrapassagemDemandaForaPonta }}</td>
+					<td> {{ histTarUltrapassagemDemandaForaPonta }}</td>
+					<td> {{ histPriceUltrapassagemDemandaForaPonta }}</td>
+					<td> {{ tarOrigemUltrapassagemDemandaForaPonta }}</td>
+					<td> {{ resPriceOrigemUltrapassagemDemandaForaPonta }}</td>
+					<td> {{ tarDestinoUltrapassagemDemandaForaPonta }}</td>
+					<td> {{ resPriceOrigemUltrapassagemDemandaForaPonta }}</td>
+					<td> {{ resPriceOrigemUltrapassagemDemandaForaPonta }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Outros</th>
+					<td>'N/D'</td>
+					<td>'N/D'</td>
+					<td>{{ histPriceOutros }}</td>
+					<td>'N/D'</td>
+					<td>{{ resPriceOrigemOutros }}</td>
+					<td>'N/D'</td>
+					<td>{{ resPriceDestinoOutros }}</td>
+					<td>{{ resPriceDestinoOutros }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
