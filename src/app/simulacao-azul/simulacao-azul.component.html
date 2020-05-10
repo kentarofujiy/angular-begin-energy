@@ -1,3 +1,4 @@
+<div class="container">
 <div style="display: block;">
   <canvas baseChart 
     [datasets]="barChartData"
@@ -38,6 +39,20 @@
     </div>
   </div>
 </div>
+<div class="card">
+  <div class="card-header">
+	<h5 class="card-title">Simular percentual Ponta</h5>
+</div>
+<div class="card-body">
+  <h5>Percentual:</h5>
+  <p>{{resHelperPercentualSimulacaoSlider}}</p>
+  <br>
+  <input [(ngModel)]="resHelperPercentualSimulacaoSlider"  type="range" #slider min="10" max="100" value="0" [value]="0"  class="slider" >
+  <br>
+  <button class="btn btn-primary" (click)="sliderSimulation()">Simular</button>
+  </div>
+</div>
+<div class="table-responsive">
 <table class="table">
   <thead>
     <tr>
@@ -236,4 +251,5 @@
     </tr>
   </tbody>
 </table>
-
+</div>
+</div>
