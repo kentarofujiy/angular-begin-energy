@@ -9,7 +9,21 @@
     [chartType]="barChartType">
   </canvas> 
 </div>
-<table class="table">
+<div class="row">
+<div class="card col-md-4 col-xs-12">
+  <div class="card-header">
+	<h5 class="card-title">Simular percentual Ponta</h5>
+</div>
+<div class="card-body">
+  <h5>Percentual:</h5>
+  <p>{{resHelperPercentualSimulacaoSlider}}</p>
+  <br>
+  <input [(ngModel)]="resHelperPercentualSimulacaoSlider"  type="range" #slider min="10" max="100" value="0" [value]="0"  class="slider" >
+  <br>
+  <button class="btn btn-primary" (click)="sliderSimulation()">Simular</button>
+  </div>
+</div>
+<table class="table col-md-8 col-xs-12">
 	<thead>
 		<tr>
 			<th>Origem</th>
@@ -23,6 +37,7 @@
 	<td>{{ resPriceSimulacaoTotal }}</td>
 </tr>
 </table>
+</div>
 <div class="flex">
   <div class="flex-item">
     <div style="display: block;">
@@ -39,19 +54,7 @@
     </div>
   </div>
 </div>
-<div class="card">
-  <div class="card-header">
-	<h5 class="card-title">Simular percentual Ponta</h5>
-</div>
-<div class="card-body">
-  <h5>Percentual:</h5>
-  <p>{{resHelperPercentualSimulacaoSlider}}</p>
-  <br>
-  <input [(ngModel)]="resHelperPercentualSimulacaoSlider"  type="range" #slider min="10" max="100" value="0" [value]="0"  class="slider" >
-  <br>
-  <button class="btn btn-primary" (click)="sliderSimulation()">Simular</button>
-  </div>
-</div>
+
 <div class="table-responsive">
 <table class="table">
   <thead>
