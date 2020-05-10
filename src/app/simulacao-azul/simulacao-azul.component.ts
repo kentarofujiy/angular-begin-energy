@@ -595,7 +595,8 @@ sliderSimulation() {
       this.resHelperKwhSimulacaoPercentualForaPonta,
       this.tarOrigemDemandaRegistradaKwPontaTusd
     );
-
+    this.calcSimulacao();
+this.updateGraficos();
 }
 
 
@@ -1166,7 +1167,7 @@ sliderSimulation() {
   }
 
   calcSimulacao() {
-    this.resPriceDestinoTotal = math.sum(
+    this.resPriceSimulacaoTotal = math.sum(
       this.resPriceSimulacaoConsumoPontaTusd, //op1
       this.resPriceDestinoConsumoForaPontaTusd, //op2
       this.resPriceSimulacaoConsumoPontaTe, //op3
@@ -1184,6 +1185,7 @@ sliderSimulation() {
       this.resPriceDestinoUltrapassagemDemandaForaPonta, //op15
       this.resPriceDestinoOutros //op16
     );
+    console.log(this.resPriceSimulacaoTotal);
     return this.resPriceSimulacaoTotal;
   }
 
