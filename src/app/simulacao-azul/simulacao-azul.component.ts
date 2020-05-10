@@ -271,6 +271,112 @@ export class SimulacaoAzulComponent implements OnInit {
         resPriceDestinoOutros: any = 0;  
   // FIM VARIAVEIS DESTINO
 
+  // VARIAVEIS SIMULACAO
+        resHelperPercentualSimulacaoSlider: any = 1;
+        resHelperKwhSimulacaoPercentualForaPonta: any = 1;
+     //3. Kwh simulacao*/
+        //op1 
+        kwhSimulacaoConsumoPontaTusd: any = 1;
+        //op2 
+        kwhSimulacaoConsumoForaPontaTusd: any = 1;
+        //op3 
+        kwhSimulacaoConsumoPontaTe: any = 1;
+        //op4 
+        kwhSimulacaoConsumoForaPontaTe: any = 1;
+        //op5 
+        kwhSimulacaoConsumoReativoExcedentePonta: any = 1;
+        //op6 
+        kwhSimulacaoConsumoReativoExcedenteForaPonta: any = 1;
+        //op7
+        kwhSimulacaoAdicionalBandeirasPonta: any = 1;
+        //op8
+        kwhSimulacaoAdicionalBandeirasForaPonta: any = 1;
+        //op9 
+        kwhSimulacaoDemandaReativaExcedenteForaPontaTusd: any = 1;
+        //op10
+        kwhSimulacaoDemandaRegistradaKwPontaTusd: any = 0;
+        //op11
+        kwhSimulacaoDemandaRegistradaKwForaPontaTusd: any = 0;
+        //op12
+        kwhSimulacaoDemandaNaoUtilizadaPonta: any = 0;
+        //op13
+        kwhSimulacaoDemandaNaoUtilizadaForaPonta: any = 0;
+        //op14
+        kwhSimulacaoUltrapassagemDemandaPonta: any = 0;
+        //op15 
+        kwhSimulacaoUltrapassagemDemandaForaPonta: any = 0;
+        //op16
+        kwhSimulacaoOutros: any = 0;
+   /* 3. Tarifas destino */
+     //op1
+      tarSimulacaoPontaTusd: any = 1;
+      //op2
+      tarSimulacaoForaPontaTusd: any = 1;
+      //op3
+      tarSimulacaoPontaTe: any = 1;
+      //op4
+      tarSimulacaoForaPontaTe: any = 1;
+      //op5
+      tarSimulacaoConsumoReativoExcedentePonta: any = 1;
+      //op6
+      tarSimulacaoConsumoReativoExcedenteForaPonta: any = 1;
+      //op7
+      // Acidional bandeiras Ponta valor no histórico
+      //op8
+      // Acidional bandeiras Fora Ponta valor no histórico
+      //op9
+      tarSimulacaoDemandaReativaExcedenteForaPontaTusd: any = 1;
+      //op10
+      tarSimulacaoDemandaRegistradaKwPontaTusd: any = 0;
+      //op11
+      tarSimulacaoDemandaRegistradaKwForaPontaTusd: any = 0;
+      //op12 
+      tarSimulacaoDemandaNaoUtilizadaPonta: any = 0;
+      //op13 
+      tarSimulacaoDemandaNaoUtilizadaForaPonta: any = 0;
+      //op14
+      tarSimulacaoUltrapassagemDemandaPonta: any = 0;
+      //op15
+      tarSimulacaoUltrapassagemDemandaForaPonta: any = 0;
+      //op16
+      // outros nao tem tarifa
+  /*  4. Variaveis resultado origem */
+        resPriceSimulacaoTotal: any = 1;
+        resSimulacaoKwhPontaTusd: any = 1; 
+        //op1 
+        resPriceSimulacaoConsumoPontaTusd: any = 1;
+        //op2 
+        resPriceSimulacaoConsumoForaPontaTusd: any = 1;
+        //op3 
+        resPriceSimulacaoConsumoPontaTe: any = 1;
+        //op4 
+        resPriceSimulacaoConsumoForaPontaTe: any = 1;
+        //op5 
+        resPriceSimulacaoConsumoReativoExcedentePonta: any = 1;
+        //op6 
+        resPriceSimulacaoConsumoReativoExcedenteForaPonta: any = 1;
+        //op7
+        resPriceSimulacaoAdicionalBandeirasPonta: any = 1;
+        //op8
+        resPriceSimulacaoAdicionalBandeirasForaPonta: any = 1;
+        //op9 
+        resPriceSimulacaoDemandaReativaExcedenteForaPontaTusd: any = 1;
+        //op10
+        resPriceSimulacaoDemandaRegistradaKwPontaTusd: any = 0;
+        //op11
+        resPriceSimulacaoDemandaRegistradaKwForaPontaTusd: any = 0;
+        //op12
+        resPriceSimulacaoDemandaNaoUtilizadaPonta: any = 0;
+        //op13
+        resPriceSimulacaoDemandaNaoUtilizadaForaPonta: any = 0;
+        //op14
+        resPriceSimulacaoUltrapassagemDemandaPonta: any = 0;
+        //op15 
+        resPriceSimulacaoUltrapassagemDemandaForaPonta: any = 0;
+        //op16
+        resPriceSimulacaoOutros: any = 0;  
+  // FIM VARIAVEIS SIMULACAO
+
   /////////////////////////// FIM INICIALIZACAO DAS VARIAVEIS ////////////////////////////////////
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
@@ -291,6 +397,9 @@ export class SimulacaoAzulComponent implements OnInit {
     this.getTarifaDestino();
     this.calcKwhDestinoPontaTusd();
     this.calcDestino();
+    // simulacao
+    this.calcKwhSimulacaoPontaTusd();
+    this.calcSimulacao();
   }
   
   
@@ -635,6 +744,63 @@ export class SimulacaoAzulComponent implements OnInit {
       }
 
   // fim destino azul
+
+   calcKwhSimulacaoPontaTusd() {
+    // usar um valor percentual e obter tal percentuagem do valor do historico de consumo fora ponta
+    // no caso 20 é um valor arbitrário
+    // multiplicar por 3(ref: horas) depois por 20 (ref: dias)
+    // usar esse kwh calculado e  usar como kwh do consumo ponta tusdo
+    // multiplicar os 3 valores que variam no origem verde destino azul
+    // 1. resPriceDestinoConsumoPontaTusd
+    // 2. resPriceDestinoConsumoPontaTe
+    // 3. resPriceDestinoDemandaRegistradaKwPontaTusd
+    this.resHelperPercentualSimulacaoSlider = 25;    
+    this.resHelperKwhSimulacaoPercentualForaPonta =
+    math.chain(this.histKwhDemandaRegistradaKwForaPontaTusd)
+      .divide(100)
+      .multiply(this.resHelperPercentualSimulacaoSlider)
+      .done()
+    this.resSimulacaoKwhPontaTusd = 
+    math.chain(this.resHelperKwhSimulacaoPercentualForaPonta)
+      .multiply(3)
+      .multiply(20)
+      .done() 
+  this.resPriceSimulacaoConsumoPontaTusd =  
+  math.multiply(this.resSimulacaoKwhPontaTusd, this.tarDestinoPontaTusd);
+
+  this.resPriceSimulacaoConsumoPontaTe =
+  math.multiply(this.resSimulacaoKwhPontaTusd, this.tarDestinoPontaTe);
+
+  this.resPriceSimulacaoDemandaRegistradaKwPontaTusd =
+  math.multiply(this.resHelperKwhSimulacaoPercentualForaPonta, this.tarOrigemDemandaRegistradaKwPontaTusd);
+  }
+
+  calcSimulacao() {
+      this.resPriceDestinoTotal =
+        math.sum(
+           this.resPriceSimulacaoConsumoPontaTusd,                                     //op1
+           this.resPriceDestinoConsumoForaPontaTusd,                                 //op2
+           this.resPriceSimulacaoConsumoPontaTe,                                       //op3
+           this.resPriceDestinoConsumoForaPontaTe,                                   //op4
+           this.resPriceDestinoConsumoReativoExcedentePonta,                         //op5
+           this.resPriceDestinoConsumoReativoExcedenteForaPonta,                     //op6
+           this.resPriceDestinoAdicionalBandeirasPonta,                              //op7
+           this.resPriceDestinoAdicionalBandeirasForaPonta,                          //op8
+           this.resPriceDestinoDemandaReativaExcedenteForaPontaTusd,                 //op9
+           this.resPriceSimulacaoDemandaRegistradaKwPontaTusd,                         //op10
+           this.resPriceDestinoDemandaRegistradaKwForaPontaTusd,                     //op11
+           this.resPriceDestinoDemandaNaoUtilizadaPonta,                             //op12
+           this.resPriceDestinoDemandaNaoUtilizadaForaPonta,                         //op13
+           this.resPriceDestinoUltrapassagemDemandaPonta,                            //op14
+           this.resPriceDestinoUltrapassagemDemandaForaPonta,                        //op15
+           this.resPriceDestinoOutros                                                //op16
+        ) 
+        return this.resPriceSimulacaoTotal
+  }
+
+  // simulacao valor do slider
+
+  // fim simulacao valor do slider
 
     /////////////////////////// FIM FUNCOES ////////////////////////////////////
   /*

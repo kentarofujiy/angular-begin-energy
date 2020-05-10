@@ -12,8 +12,8 @@
 <!-- <th scope="col">  histKwhSim 
 <th scope="col"> tarPriceSim  
 <th scope="col">   fatorKwhSim 
-<th scope="col">   fatorPriceSim 
-<th scope="col"> resPriceSim  -->
+<th scope="col">   fatorPriceSim -->
+<th scope="col"> resPriceSim  
     </tr>
   </thead>
   <tbody>
@@ -26,6 +26,7 @@
     <td>1.6 {{ resPriceOrigemConsumoPontaTusd }} </td>
     <td>1.7 {{ tarDestinoPontaTusd }} </td>
     <td>1.8 {{ resPriceDestinoConsumoPontaTusd }} </td>
+    <td>1.9 {{ resPriceSimulacaoConsumoPontaTusd }} </td>
     </tr>
     <tr>
       <th scope="row">2.1 Consumo Fora Ponta tusd</th>
@@ -36,6 +37,7 @@
     <td>2.6 {{ resPriceOrigemConsumoForaPontaTusd }} </td>
     <td>2.7 {{ tarDestinoForaPontaTusd }} </td>
     <td>2.8 {{ resPriceDestinoConsumoForaPontaTusd }} </td>
+    <td>2.9 {{ resPriceDestinoConsumoForaPontaTusd }} </td>
     </tr>
   <tr>
       <th scope="row"> 3.1 Consumo Ponta TE</th>
@@ -46,6 +48,7 @@
     <td>3.6 {{ resPriceOrigemConsumoPontaTe }} </td>
     <td>3.7 {{ tarDestinoPontaTe }} </td>
     <td>3.8 {{ resPriceDestinoConsumoPontaTe }} </td>
+    <td>3.9 {{ resPriceSimulacaoConsumoPontaTe }} </td>
     </tr>
     <tr>
       <th scope="row"> 4.1 Consumo Fora Ponta TE</th>
@@ -56,6 +59,7 @@
     <td>4.6 {{ resPriceOrigemConsumoForaPontaTe }} </td>
     <td>4.7 {{ tarDestinoForaPontaTe }} </td>
     <td>4.8 {{ resPriceDestinoConsumoForaPontaTe }} </td>
+     <td>4.9 {{ resPriceDestinoConsumoForaPontaTe }} </td>
     </tr>
 
     <tr>
@@ -67,6 +71,7 @@
     <td>5.6 {{ resPriceOrigemConsumoReativoExcedentePonta }}</td>
     <td>5.7 {{ tarDestinoConsumoReativoExcedenteForaPonta }}</td>
     <td>5.8 {{ resPriceDestinoConsumoReativoExcedentePonta }}</td>
+     <td>5.9 {{ resPriceDestinoConsumoReativoExcedentePonta }}</td>
     </tr>
     <tr>
       <th scope="row">6.1 Consumo Reativo Exedente Fora Ponta</th>
@@ -77,6 +82,7 @@
     <td>6.6 {{ resPriceOrigemConsumoReativoExcedenteForaPonta }}</td>
     <td>6.7 {{ tarDestinoConsumoReativoExcedenteForaPonta }}</td>
     <td>6.8 {{ resPriceDestinoConsumoReativoExcedenteForaPonta }}</td>
+    <td>6.9 {{ resPriceDestinoConsumoReativoExcedenteForaPonta }}</td>
     </tr>
     <tr>
       <th scope="row"> 7.1 Adicional Bandeiras Ponta</th>
@@ -87,6 +93,7 @@
     <td>7.6 {{ resPriceOrigemAdicionalBandeirasPonta }}</td>
     <td>7.7 'N/D'</td>
     <td>7.8 {{ resPriceDestinoAdicionalBandeirasPonta }}</td>
+    <td>7.9 {{ resPriceDestinoAdicionalBandeirasPonta }}</td>
     </tr>
     <tr>
       <th scope="row"> 8.1 Adicional Bandeiras Fora Ponta</th>
@@ -97,6 +104,7 @@
     <td>8.6 {{ resPriceOrigemAdicionalBandeirasForaPonta }}</td>
     <td>8.7 'N/D'</td>
     <td>8.8 {{ resPriceDestinoAdicionalBandeirasForaPonta }}</td>
+    <td>8.9 {{ resPriceDestinoAdicionalBandeirasForaPonta }}</td>
     </tr>
     <tr>
       <th scope="row">9.1 Demanda Reativa Exedente Fora Ponta TUSD</th>
@@ -107,6 +115,7 @@
     <td>9.6 {{ resPriceOrigemDemandaReativaExcedenteForaPontaTusd }} </td>
     <td>9.7 {{ tarDestinoDemandaReativaExcedenteForaPontaTusd }}</td>
     <td>9.8 {{ resPriceDestinoDemandaReativaExcedenteForaPontaTusd }} </td>
+    <td>9.9 {{ resPriceDestinoDemandaReativaExcedenteForaPontaTusd }} </td>
     </tr>
     <tr>
     <th scope="row">      10.1 Demanda Registrada Ponta TUSD</th>
@@ -117,6 +126,7 @@
     <td>10.6 {{ resPriceOrigemDemandaRegistradaKwPontaTusd }}</td>
     <td>10.7 {{ tarDestinoDemandaRegistradaKwPontaTusd }}</td>
     <td>10.8 {{ resPriceDestinoDemandaRegistradaKwPontaTusd }}</td>
+    <td>10.9 {{ resPriceSimulacaoDemandaRegistradaKwPontaTusd }}</td>
     </tr>
     <tr>
       <th scope="row">      11.1 Demanda Registrada Fora Ponta TUSD</th>
@@ -127,6 +137,7 @@
     <td>11.6 {{ resPriceOrigemDemandaRegistradaForaPontaTusd }}</td>
     <td>11.7 {{ tarDestinoDemandaRegistradaKwForaPontaTusd }}</td>
     <td>11.8{{ resPriceDestinoDemandaRegistradaForaPontaTusd }}</td>
+    <td>11.9{{ resPriceDestinoDemandaRegistradaForaPontaTusd }}</td>
     </tr>
     <tr>
       <th scope="row">      12.1 Demanda Não Utilizada Ponta</th>
@@ -137,6 +148,7 @@
     <td>12.6 {{ resPriceOrigemDemandaNaoUtilizadaPonta }}</td>
     <td>12.7 {{ tarDestinoDemandaNaoUtilizadaPonta }}</td>
     <td>12.8 {{ resPriceDestinoDemandaNaoUtilizadaPonta }}</td>
+     <td>12.9 {{ resPriceDestinoDemandaNaoUtilizadaPonta }}</td>
     </tr>
     <tr>
       <th scope="row">      13.1 Demanda Não Utilizada Fora Ponta</th>
@@ -147,6 +159,7 @@
     <td>13.6 {{ resPriceOrigemDemandaNaoUtilizadaForaPonta }}</td>
     <td>13.7 {{ tarDestinoDemandaNaoUtilizadaForaPonta }}</td>
     <td>13.8 {{ resPriceDestinoDemandaNaoUtilizadaForaPonta }}</td>
+    <td>13.9 {{ resPriceDestinoDemandaNaoUtilizadaForaPonta }}</td>
     </tr>
     <tr>
       <th scope="row">      14.1 Ultrapassagem Demanda Contratada Ponta</th>
@@ -157,6 +170,7 @@
     <td>14.6 {{ resPriceOrigemUltrapassagemDemandaPonta }}</td>
     <td>14.7 {{ tarDestinoUltrapassagemDemandaPonta }}</td>
     <td>14.8 {{ resPriceDestinoUltrapassagemDemandaPonta }}</td>
+    <td>14.9 {{ resPriceDestinoUltrapassagemDemandaPonta }}</td>
     </tr>
     <tr>
       <th scope="row"> 15 -- Ultrapassagem Demanda Contratada Fora Ponta</th>
@@ -167,6 +181,7 @@
     <td>6 --  {{ resPriceOrigemUltrapassagemDemandaForaPonta }}</td>
     <td>7 --  {{ tarDestinoUltrapassagemDemandaForaPonta }}</td>
     <td>8 --  {{ resPriceOrigemUltrapassagemDemandaForaPonta }}</td>
+    <td>9 --  {{ resPriceOrigemUltrapassagemDemandaForaPonta }}</td>
     </tr>
     <tr>
       <th scope="row">16 -- Outros</th>
@@ -177,6 +192,7 @@
     <td>6 -- {{ resPriceOrigemOutros }}</td>
     <td>7 -- 'N/D'</td>
     <td>8 -- {{ resPriceDestinoOutros }}</td>
+    <td>9 -- {{ resPriceDestinoOutros }}</td>
     </tr>
   </tbody>
 </table>
