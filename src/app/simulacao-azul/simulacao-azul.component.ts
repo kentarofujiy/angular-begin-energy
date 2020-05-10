@@ -161,6 +161,7 @@ export class SimulacaoAzulComponent implements OnInit {
         //op14
         resPriceOrigemUltrapassagemDemandaPonta: any = 0;
         //op15 
+        resPriceOrigemUltrapassagemDemandaForaPonta: any = 0;
         tarOrigemUltrapassagemDemandaForaPonta: any = 0;
         //op16
         resPriceOrigemOutros: any = 0;
@@ -464,8 +465,11 @@ export class SimulacaoAzulComponent implements OnInit {
         this.resPriceOrigemUltrapassagemDemandaPonta =
         math.multiply(this.resKwhUltrapassagemDemandaPagarPonta, this.tarOrigemUltrapassagemDemandaPonta);
         //op15
-        this.resPriceDestinoUltrapassagemDemandaForaPonta =
-        math.multiply(this.resKwhUltrapassagemDemandaPagarForaPonta, this.tarOrigemUltrapassagemDemandaForaPonta);
+        this.resPriceOrigemUltrapassagemDemandaForaPonta =
+        math.multiply(
+          //this.resKwhUltrapassagemDemandaPagarForaPonta, 
+          16.60,
+          this.tarOrigemUltrapassagemDemandaForaPonta);
         //op16
         this.resPriceOrigemOutros = this.histPriceOutros;
 
@@ -602,7 +606,8 @@ export class SimulacaoAzulComponent implements OnInit {
         math.multiply(this.resKwhUltrapassagemDemandaPagarPonta, this.tarDestinoUltrapassagemDemandaPonta);
         //op15
         this.resPriceDestinoUltrapassagemDemandaForaPonta =
-        math.multiply(this.resKwhUltrapassagemDemandaPagarForaPonta, this.tarDestinoUltrapassagemDemandaForaPonta);
+        this.resPriceDestinoUltrapassagemDemandaForaPonta;
+       // math.multiply(this.resKwhUltrapassagemDemandaPagarForaPonta, //this.tarDestinoUltrapassagemDemandaForaPonta);
         //op16
         this.resPriceDestinoOutros = this.histPriceOutros;
 

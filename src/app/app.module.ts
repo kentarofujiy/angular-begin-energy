@@ -29,7 +29,13 @@ import { OrigemVerdeGetHistoryService } from './shared/origem-verde-get-history.
        RouterModule.forRoot(
       [
     {
-      path:'',
+      path: '',
+      component: SimulacaoAzulComponent
+     // path:'',
+     // component:LoginComponent
+    },
+    {
+       path:'login',
       component:LoginComponent
     },
     {
