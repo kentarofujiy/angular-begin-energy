@@ -4,9 +4,10 @@ import * as math from "mathjs";
 import { Options } from "ng5-slider";
 import { ChartOptions, ChartType, ChartDataSets } from 'chartjs';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import { Label } from 'ng2-charts';
+import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import { Router } from '@angular/router';
 import { OrigemVerdeGetHistoryService } from '../shared/origem-verde-get-history.service';
+import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-simulacao-azul',
@@ -14,6 +15,7 @@ import { OrigemVerdeGetHistoryService } from '../shared/origem-verde-get-history
   styleUrls: ['./simulacao-azul.component.css']
 })
 export class SimulacaoAzulComponent implements OnInit {
+ 
     /////////////////////////// FIM INICIALIZACAO DAS VARIAVEIS ////////////////////////////////////
   // VARIAVEIS ORIGEM
    /*s/n helpers */
@@ -375,10 +377,95 @@ export class SimulacaoAzulComponent implements OnInit {
         resPriceSimulacaoUltrapassagemDemandaForaPonta: any = 0;
         //op16
         resPriceSimulacaoOutros: any = 0;  
+
   // FIM VARIAVEIS SIMULACAO
 
   /////////////////////////// FIM INICIALIZACAO DAS VARIAVEIS ////////////////////////////////////
 // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+  public barChartOptions: ChartOptions = {
+    responsive: true,
+};
+public barChartLabels: Label[] = ['Comparação Valor da Fatura'];
+  public barChartType: ChartType = 'bar';
+  public barChartLegend = true;
+  public barChartPlugins = [];
+  public barChartData: ChartDataSets[] = [ ];
+  // // grafico de linhas
+  public lineChartData: ChartDataSets[] = [ ];
+  public lineChartLabels: Label[] = [ ];
+  public lineChartOptions: (ChartOptions & { annotation: any }) = {
+    responsive: true,
+    scales: {
+      // We use this empty structure as a placeholder for dynamic theming.
+      xAxes: [
+         {
+          id: 'x-axis-0',
+          position: 'bottom'
+      },
+        {
+          id: 'x-axis-1',
+          position: 'top'
+      }
+      ],
+      yAxes: [
+        {
+          id: 'y-axis-1',
+          position: 'left',
+          gridLines: {
+            color: 'blue',
+          },
+          ticks: {
+            fontColor: 'blue',
+          }
+        },
+        {
+          id: 'y-axis-0',
+          position: 'right',
+          gridLines: {
+            color: 'rgba(255,0,0,0.3)',
+          },
+          ticks: {
+            fontColor: 'red',
+          }
+        }
+      ]
+    },
+    annotation: {
+      annotations: [ ],
+    },
+  };
+  public lineChartColors: Color[] = [
+    // { // grey
+    //   backgroundColor: 'rgba(148,159,177,0.2)',
+    //   borderColor: 'rgba(148,159,177,1)',
+    //   pointBackgroundColor: 'rgba(148,159,177,1)',
+    //   pointBorderColor: '#fff',
+    //   pointHoverBackgroundColor: '#fff',
+    //   pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    // },
+    { // red
+      backgroundColor: 'rgba(255,0,0,0.3)',
+      borderColor: 'red',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    },
+    { // dark grey
+      backgroundColor: '#6ea8e137',
+      borderColor: 'blue',
+      pointBackgroundColor: 'rgba(77,83,96,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    }
+    
+  ];
+  public lineChartLegend = true;
+  public lineChartType = 'line';
+  public lineChartPlugins = [pluginAnnotations];
   
   constructor(
     public router: Router,
@@ -400,10 +487,206 @@ export class SimulacaoAzulComponent implements OnInit {
     // simulacao
     this.calcKwhSimulacaoPontaTusd();
     this.calcSimulacao();
+    // graficos
+    this.plotBarChart();
+    this.plotLineChart();
+    // teste
+    this.lineFactors();
   }
   
   
   /////////////////////////// FUNCOES ////////////////////////////////////
+  /*
+    this.resHelperPercentualDestinoBase = 20;    
+    this.resHelperKwhPercentualForaPonta =
+    math.chain(this.histKwhDemandaRegistradaKwForaPontaTusd)
+      .divide(100)
+      .multiply(this.resHelperPercentualDestinoBase)
+      .done()
+    this.resDestinoKwhPontaTusd = 
+    math.chain(this.resHelperKwhPercentualForaPonta)
+      .multiply(3)
+      .multiply(20)
+      .done() 
+
+  */
+/*
+=> array de valores contendo objetos Json com: 
+{ 
+  "percentual": <integer>,
+  "percentualdoconsumokwhforaponta": <bigint>,
+  "valordafatura": <bigint>,
+  "disponibilidadeenergetica": <bigint>
+}
+inputs:
+histKwhConsumoForaPontaTusd
+histKwhDemandaRegistradaKwForaPontaTusd
+1. obter array contendo todos os valores referentes a divisão do consumo fora ponta de 1% ate 30%
+2. multiplicar cada objeto desse array por 3 e depois por 20 e verificar se o valor obtido é inferior ao histKwhConsumoForaPontaTusd
+fatoresGrafico = [
+  {
+  "percentual": 1,
+  "fator": 1.46,
+  "consumoponta": 123.123
+  },
+  {
+    "percentual": 2,
+    "fator": 2.92,
+    "consumoponta": 123.123
+  }
+]
+
+     .done() 
+  this.resPriceDestinoConsumoPontaTusd =  
+  math.multiply(this.resDestinoKwhPontaTusd, this.tarDestinoPontaTusd);
+
+  this.resPriceDestinoConsumoPontaTe =
+  math.multiply(this.resDestinoKwhPontaTusd, this.tarDestinoPontaTe);
+
+  this.resPriceDestinoDemandaRegistradaKwPontaTusd =
+  math.multiply(this.resHelperKwhPercentualForaPonta, this.tarOrigemDemandaRegistradaKwPontaTusd);
+
+*/
+
+a :any = [];
+b :any = [];
+c :any = [];
+d :any = [];
+e :any = [];
+f :any = [];
+g :any = [];
+limite :any = 0;
+base :any = 0;
+percent :any = 0;
+fator :any = 0;
+tarifatusd :any = 0;
+tarifate  :any = 0;
+tarifaregistrada :any = 0;
+pricepontatusd :any = 0;
+pricepontate :any = 0;
+precoregistrada :any = 0;
+parcialdafatura :any = 0;
+somarfatura :any = 0;
+totalfatura :any = 0;
+
+
+lineFactors() {
+  this.base = 146;
+  this.limite = 1778;
+  this.tarifatusd = 0.082647415469211;
+  this.tarifate = 0.4736207;
+  this.tarifaregistrada = 41.6531028903238;
+
+
+   this.parcialdafatura =
+        math.sum(
+          // this.resPriceOrigemConsumoPontaTusd,                                     //op1
+           this.resPriceOrigemConsumoForaPontaTusd,                                 //op2
+        //   this.resPriceOrigemConsumoPontaTe,                                       //op3
+           this.resPriceOrigemConsumoForaPontaTe,                                   //op4
+           this.resPriceOrigemConsumoReativoExcedentePonta,                         //op5
+           this.resPriceOrigemConsumoReativoExcedenteForaPonta,                     //op6
+           this.resPriceOrigemAdicionalBandeirasPonta,                              //op7
+           this.resPriceOrigemAdicionalBandeirasForaPonta,                          //op8
+           this.resPriceOrigemDemandaReativaExcedenteForaPontaTusd,                 //op9
+       //    this.resPriceOrigemDemandaRegistradaKwPontaTusd,                         //op10
+           this.resPriceOrigemDemandaRegistradaKwForaPontaTusd,                     //op11
+           this.resPriceOrigemDemandaNaoUtilizadaPonta,                             //op12
+           this.resPriceOrigemDemandaNaoUtilizadaForaPonta,                         //op13
+           this.resPriceOrigemUltrapassagemDemandaPonta,                            //op14
+           this.resPriceDestinoUltrapassagemDemandaForaPonta,                        //op15
+           this.resPriceOrigemOutros                                                //op16
+        ) 
+
+  for (let i = 10; this.fator < this.limite; i++){
+    this.percent =
+    math.chain(this.base)
+      .divide(100)
+      .multiply(i)
+      .done()
+    console.log("percent = " + this.percent);
+    this.fator =
+    math.chain(this.percent)
+      .multiply(3)
+      .multiply(20)
+      .done()
+    console.log("ponta = " + this.fator);
+    this.a.push(this.fator);
+    this.g.push(i + "%");
+    this.pricepontatusd =
+    math.multiply(this.fator, this.tarifatusd);
+    console.log("preco ponta tusd = " + this.pricepontatusd);
+    this.b.push(this.pricepontatusd);
+    this.pricepontate =
+    math.multiply(this.fator, this.tarifate);
+    console.log("preco ponta te = " + this.pricepontate);
+    this.c.push(this.pricepontate);
+    this.precoregistrada = 
+    math.multiply(this.percent, this.tarifaregistrada);
+    console.log("preco registrada = " + this.precoregistrada);
+    this.d.push(this.precoregistrada);
+    this.somarfatura = 
+    math.sum(
+      this.pricepontatusd,
+      this.pricepontate,
+      this.precoregistrada);
+      console.log("somar a fatura = " + this.somarfatura);
+      this.e.push(this.somarfatura);
+    this.totalfatura = 
+    math.sum(
+      this.parcialdafatura,
+      this.somarfatura
+    );
+    console.log("total da fatura = " + this.totalfatura);
+    this.f.push(this.totalfatura);
+  }
+  console.log(this.a);
+  console.log(this.b);
+  console.log(this.c);
+  console.log(this.d);
+  console.log(this.e);
+  console.log(this.f);
+  console.log(this.g);
+}
+ plotLineChart() {
+    this.lineChartData = [
+   // { data: this.f, label: 'Valor Fatura', yAxisID: 'y-axis-1'  },
+   // { data: this.e, label: 'Custo Ponta', xAxisID: 'x-axis-1' },
+    { data: this.f, label: 'Valor Fatura (R$)', yAxisID: 'y-axis-0' },
+    { data: this.a, label: 'Disponibilidade Energética (Kw)', yAxisID: 'y-axis-1' }
+  ];
+  this.lineChartLabels = this.g;
+  this.lineChartOptions.annotation.annotations = [
+    {
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y-axis-0',
+          value: this.histPriceTotalFatura,
+          borderColor: 'orange',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'orange',
+            content: 'Fatura Origem - R$ ' + this.histPriceTotalFatura 
+          }
+        },
+        {
+          type: 'line',
+          mode: 'horizontal',
+          scaleID: 'y-axis-1',
+          value: this.histKwhDemandaRegistradaKwForaPontaTusd,
+          borderColor: 'green',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'green',
+            content: 'Origem Demanda Ponta - Kw ' + this.histKwhDemandaRegistradaKwForaPontaTusd
+          }
+        },
+  ];
+  }
+
+
   // funcoes historico e origem verde 
 
  getHistorico() {
@@ -497,7 +780,7 @@ export class SimulacaoAzulComponent implements OnInit {
         //op9
         this.tarOrigemDemandaReativaExcedenteForaPontaTusd = 19.5772335;
         //op10
-        this.tarOrigemDemandaRegistradaKwPontaTusd = 0;
+        this.tarOrigemDemandaRegistradaKwPontaTusd = 41.6531028903238;
         //op11
         this.tarOrigemDemandaRegistradaKwForaPontaTusd = 19.5773313;
         //op12
@@ -801,7 +1084,15 @@ export class SimulacaoAzulComponent implements OnInit {
   // simulacao valor do slider
 
   // fim simulacao valor do slider
-
+  // graficos
+ plotBarChart() {
+   this.barChartData = [    
+   { data: [this.histPriceTotalFatura], label: 'Total Inicial' },
+   { data: [this.resPriceDestinoTotal], label: 'Simulado Base' },
+   { data: [this.resPriceSimulacaoTotal], label: 'Simulado Ponta' }]
+  }
+ 
+  // fim graficos
     /////////////////////////// FIM FUNCOES ////////////////////////////////////
   /*
   ########################## SIMULACAO VERDE PARA AZUL ##################################
@@ -821,6 +1112,8 @@ export class SimulacaoAzulComponent implements OnInit {
   beginDestino() {
     calcKwhDestinoPontaTusd();
     calcDestino();
+    plotBarChart();
+    plot
   }
 
 
@@ -842,6 +1135,7 @@ export class SimulacaoAzulComponent implements OnInit {
     initFactors();
     calcBaseFactors()
     calcDestino();
+
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   ********************* considerar os dados necessários para o cálculo ******************
